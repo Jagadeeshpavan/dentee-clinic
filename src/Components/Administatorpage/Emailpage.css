@@ -1,5 +1,3 @@
-/* Base styles for non-responsive elements */
-
 .maincont333{
   margin-left: 8.4%;
   padding-top: 4.2%;
@@ -8,7 +6,7 @@
 
 .promotional-email-report-333 {
   text-align: left;
-  margin: 20px;
+  margin: 2%;
 }
 .but-mail{
   background-color: #007bff;
@@ -19,20 +17,20 @@
 .pat-mail{
   display: flex; 
   align-items: center;
-  padding-left: 10px; 
+  padding-left: 1%; 
 }
 .pat-mali{
   color: black;
-  margin: 9px 10px;
+  margin: 1% 2%;
   font-size: 13px;
 }
 
 
 .search-bar-333{
-  height: 35px;
-  width: 350px;
-  margin-left: 30px;
-  margin-top: 15px;
+  height: 6vh;
+  width: 350%;
+  margin-left: 30%;
+  margin-top: 2%;
   border-right: none;
   border: 1px solid grey;
 }
@@ -41,9 +39,9 @@
   width: 50%;
 }
 .search-btn-333{
-  height: 39px;
-  width: 45px;
-  margin-top: 14.5px;
+  height: 6.6vh;
+  width: 15%;
+  margin-top: 2%;
   border: none;
   background-color: red;
   color: #fff;
@@ -95,7 +93,7 @@
 .email-table-333 th,
 .email-table-333 td {
   border: 1px solid #ccc;
-  padding: 8px;
+  padding: 1%;
 }
 
 .email-table-333 th {
@@ -108,19 +106,19 @@
   flex-direction: row;
   align-items: center;
   margin-top: 0px;
-  height: 50px;
+  height: 9vh;
   width: 100%;
   background-color: rgb(219, 228, 231);
 }
 
 .patient-icon-333 {
-  margin-top: 5px;
-  margin-left: 50px;
+  margin-top: 1%;
+  margin-left: 5%;
 }
 
 .patient-heading-333 {
   font-size: 15px;
-  margin-left: 20px;
+  margin-left: 1%;
   font-weight: bold;
 }
 

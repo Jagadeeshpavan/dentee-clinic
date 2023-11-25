@@ -1,28 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect} from 'react';
 import { AiOutlineStepBackward, AiOutlineStepForward } from 'react-icons/ai';
 import { BiSearch } from 'react-icons/bi';
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { BrowserRouter as Router, Routes, Route, Link, useParams } from 'react-router-dom';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
+import axios from 'axios';
 import './Browsersessionhistroy.css';
 
 function SearchTablePage() {
+  const[histroy,setHistroy] = useState('');
   const staticData = [
-    { username: 'User1', IP: '192.168.1.1', deviceType: 'Mobile', action: '' },
-    { username: 'User2', IP: '192.168.1.2', deviceType: 'Desktop', action: '' },
-    { username: 'User3', IP: '192.168.1.3', deviceType: 'Desktop', action: '' },
-    { username: 'User4', IP: '192.168.1.4', deviceType: 'Desktop', action: '' },
-    { username: 'User5', IP: '192.168.1.5', deviceType: 'Desktop', action: '' },
-    { username: 'User6', IP: '192.168.1.6', deviceType: 'Desktop', action: '' },
-    // Add more rows as needed
+    // { username: 'User1', IP: '192.168.1.1', deviceType: 'Mobile', action: '' },
+    // { username: 'User2', IP: '192.168.1.2', deviceType: 'Desktop', action: '' },
+    // { username: 'User3', IP: '192.168.1.3', deviceType: 'Desktop', action: '' },
+    // { username: 'User4', IP: '192.168.1.4', deviceType: 'Desktop', action: '' },
+    // { username: 'User5', IP: '192.168.1.5', deviceType: 'Desktop', action: '' },
+    // { username: 'User6', IP: '192.168.1.6', deviceType: 'Desktop', action: '' },
+    // // Add more rows as needed
   ];
 
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentData = staticData.slice(indexOfFirstItem, indexOfLastItem);
+  const currentData = histroy.slice(indexOfFirstItem, indexOfLastItem);
 
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -43,6 +45,19 @@ function SearchTablePage() {
     window.scrollTo(0, 0);
     setCurrentPage(pageNumber);
   };
+
+
+
+  useEffect(() => {
+    // Fetch bank account data from the server
+    axios.get('http://localhost:5001/Browser', 'newhistroy') // Use the same endpoint defined in the server
+      .then((response) => {
+        setHistroy(response.data);
+      })
+      .catch((error) => {
+        console.error('Failed to fetch bank accounts:', error);
+      });
+  }, []);
 
   return (
     <>
@@ -80,21 +95,41 @@ function SearchTablePage() {
             </tr>
           </thead>
           <tbody>
-            {currentData.map((item, index) => (
+          {Array.isArray(currentData) ? (
+           currentData.map((item, index) => (
+              <tr key={index}>
+               <td>{item.username}</td>
+                <td>{item.ip}</td>
+                <td>{item.deviceType}</td>
+                <td>{item.action} </td>
+                 
+               
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td colSpan="5">Loading...</td>
+    </tr>
+  )}
+</tbody>
+
+
+    
+            {/* {currentData.map((item, index) => (
               <tr
                 key={index}
                 onClick={() => handleRowClick(index)}
                 className="table-row-gop11"
               >
                 <td>{item.username}</td>
-                <td>{item.IP}</td>
+                <td>{item.ip}</td>
                 <td>{item.deviceType}</td>
                 <td>
                   {item.action}
                 </td>
               </tr>
             ))}
-          </tbody>
+          </tbody> */}
         </table>
         <div className='pat-brosw'>
           <button

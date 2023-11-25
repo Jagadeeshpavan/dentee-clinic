@@ -1,66 +1,16 @@
 import './Managemedicine.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BiSearch } from 'react-icons/bi';
 import { RxCross2 } from "react-icons/rx";
 import { MdOutlineModeEditOutline } from "react-icons/md";
-import { AiOutlineArrowLeft,AiOutlineStepForward,AiOutlineStepBackward } from "react-icons/ai";
-import { BrowserRouter as Router, Routes, Route, Link, useParams } from 'react-router-dom';
+import { AiOutlineArrowLeft, AiOutlineStepForward, AiOutlineStepBackward } from "react-icons/ai";
+import axios from 'axios';
+import { Link } from "react-router-dom";
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
 
-const dummyData = [
-  {
-    medicineName: 'Medicine A',
-    moleculeName: 'Molecule A',
-    dosage: '5 mg',
-    frequency: '0-0-1',
-    duration: '10 days',
-    favourite: true,
-  },
-  {
-    medicineName: 'Medicine B',
-    moleculeName: 'Molecule B',
-    dosage: '10 mg',
-    frequency: '0-1-0',
-    duration: '15 days',
-    favourite: false,
-  },
-  {
-    medicineName: 'Medicine C',
-    moleculeName: 'Molecule C',
-    dosage: '20 mg',
-    frequency: '1-0-1',
-    duration: '30 days',
-    favourite: true,
-  },
-  {
-    medicineName: 'Medicine D',
-    moleculeName: 'Molecule D',
-    dosage: '15 mg',
-    frequency: '1-1-0',
-    duration: '20 days',
-    favourite: false,
-  },
-  {
-    medicineName: 'Medicine E',
-    moleculeName: 'Molecule E',
-    dosage: '25 mg',
-    frequency: '1-1-1',
-    duration: '45 days',
-    favourite: true,
-  },
-  {
-    medicineName: 'Medicine F',
-    moleculeName: 'Molecule F',
-    dosage: '30 mg',
-    frequency: '0-1-1',
-    duration: '25 days',
-    favourite: false,
-  },
-];
-
-function Managemedicine() {
-  const [data, setData] = useState(dummyData);
+const Managemedicine = () => {
+  const [data, setData] = useState([]);
   const [newMedicine, setNewMedicine] = useState({
     medicineName: '',
     moleculeName: '',
@@ -69,10 +19,24 @@ function Managemedicine() {
     duration: '',
     favourite: false,
   });
-
   const [isAddingNewMedicine, setIsAddingNewMedicine] = useState(false);
   const [editingIndex, setEditingIndex] = useState(-1);
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    fetchData();
+  }, [searchKeyword, currentPage]);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5001/Managemedicine');
+        setData(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+   
 
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -95,25 +59,33 @@ function Managemedicine() {
     setEditingIndex(-1);
   };
 
-  const handleSaveNewMedicine = () => {
-    if (editingIndex !== -1) {
-      const updatedData = [...data];
-      updatedData[editingIndex] = newMedicine;
-      setData(updatedData);
-    } else {
-      setData([...data, newMedicine]);
-    }
+  const handleSaveNewMedicine = async () => {
+    try {
+      if (editingIndex !== -1) {
+        const response = await axios.put(`http://localhost:5001/Managemedicine/${data[editingIndex]._id}`, newMedicine);
+        const result = response.data;
+        const updatedData = [...data];
+        updatedData[editingIndex] = result;
+        setData(updatedData);
+      } else {
+        const response = await axios.post('http://localhost:5001/Managemedicine', newMedicine);
+        const result = response.data;
+        setData([...data, result]);
+      }
 
-    setIsAddingNewMedicine(false);
-    setEditingIndex(-1);
-    setNewMedicine({
-      medicineName: '',
-      moleculeName: '',
-      dosage: '',
-      frequency: '0-0-1',
-      duration: '',
-      favourite: false,
-    });
+      setIsAddingNewMedicine(false);
+      setEditingIndex(-1);
+      setNewMedicine({
+        medicineName: '',
+        moleculeName: '',
+        dosage: '',
+        frequency: '0-0-1',
+        duration: '',
+        favourite: false,
+      });
+    } catch (error) {
+      console.error('Error saving medicine:', error);
+    }
   };
 
   const handleCancelNewMedicine = () => {
@@ -136,30 +108,62 @@ function Managemedicine() {
     setIsAddingNewMedicine(true);
   };
 
-  const handleDelete = (index) => {
-    const updatedData = data.filter((_, i) => i !== index);
-    setData(updatedData);
+  const handleDelete = async (index) => {
+    try {
+      const response = await axios.delete(`http://localhost:5001/Managemedicine/${data[index]._id}`);
+      if (response.status === 200) {
+        const updatedData = data.filter((_, i) => i !== index);
+        setData(updatedData);
+      } else {
+        console.error('Error deleting medicine:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error deleting medicine:', error);
+    }
   };
-
-  const handleSearch = () => {
-    const filteredData = data.filter((medicine) =>
-      Object.values(medicine).some((value) =>
-        String(value).toLowerCase().includes(searchKeyword.toLowerCase())
-      )
-    );
-    setData(filteredData);
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5001/Managemedicine?search=${searchKeyword}`);
+      const allData = response.data;
+  
+      // Filter data based on the searchKeyword
+      const filteredData = allData.filter((medicine) => {
+        const medicineNameMatch = medicine.medicineName.toLowerCase().includes(searchKeyword.toLowerCase());
+        const moleculeNameMatch = medicine.moleculeName.toLowerCase().includes(searchKeyword.toLowerCase());
+        const dosageMatch = medicine.dosage.toLowerCase().includes(searchKeyword.toLowerCase());
+        const frequencyMatch = medicine.frequency.toLowerCase().includes(searchKeyword.toLowerCase());
+        const durationMatch = medicine.duration.toLowerCase().includes(searchKeyword.toLowerCase());
+  
+        // Simplified logic for the favourite field
+        const favouriteMatch =
+          (searchKeyword.toLowerCase() === 'yes' && medicine.favourite) ||
+          (searchKeyword.toLowerCase() === 'no' && !medicine.favourite) ||
+          (['true', 'false', 't', 'f', '1', '0'].includes(searchKeyword.toLowerCase()));
+  
+        return (
+          medicineNameMatch ||
+          moleculeNameMatch ||
+          dosageMatch ||
+          frequencyMatch ||
+          durationMatch ||
+          favouriteMatch
+        );
+      });
+  
+      setData(filteredData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
-
   // Pagination code
   const itemsPerPage = 5;
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentMedicine = data.slice(indexOfFirstItem, indexOfLastItem);
 
   const handlePageChange = (pageNumber) => {
-    // Scroll to the top of the page
     window.scrollTo(0, 0);
     setCurrentPage(pageNumber);
   };

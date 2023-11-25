@@ -1,3 +1,4 @@
+
 import React from 'react'
 import './Clinicappointment.css'
 import { AiOutlineArrowLeft } from "react-icons/ai";
@@ -8,9 +9,24 @@ import { FaRegMoneyBillAlt}  from "react-icons/fa";
 import {Link} from "react-router-dom";
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
+import { useState, useEffect } from 'react';
 
 
 const Appointment = () => {
+
+    const [appointmentData, setAppointmentData] = useState({
+        // appointmentsScheduled: 0,
+        // totalWaitingPeriod: '-',
+        // averageWaitingTime: 0,
+      });
+      useEffect(() => {
+        // Fetch appointment statistics data from the backend
+        fetch('http://localhost:5001/api/appointmentStatistics')
+          .then((response) => response.json())
+          .then((data) => setAppointmentData(data))
+          .catch((error) => console.error('Error fetching appointment statistics data:', error));
+      }, []);
+
   return (
 
     <>  
@@ -63,12 +79,21 @@ const Appointment = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tc className='appointment-data'>
-                        <td className='appointment-one'>No of appointments scheduled<div className='appointment-kn'>0</div></td><br/>
-                        <td className='appointment-two'>Total waiting period<div className='kia6'>-</div></td><br/>
-                        <td className='appointment-one'>Average waiting time<div className='appointment-kn'>0</div></td><br/>
-                    </tc>
-                </tbody>
+      <tr className='appointment-data'>
+        <td className='appointment-one'>
+          No of appointments scheduled
+          <div className='appointment-kn'>{appointmentData.appointmentsScheduled}</div>
+        </td>
+        <td className='appointment-two'>
+          Total waiting period
+          <div className='kia6'>{appointmentData.totalWaitingPeriod}</div>
+        </td>
+        <td className='appointment-one'>
+          Average waiting time
+          <div className='appointment-kn'>{appointmentData.averageWaitingTime}</div>
+        </td>
+      </tr>
+    </tbody>
                 </table>
                 </div>
 

@@ -41,7 +41,7 @@ function Web() {
     if (status === "All") {
       setFilteredData(billingData); // Show all data
     } else {
-      const filtered = billingData.filter(item => item.appointmentStatus === status);
+      const filtered = billingData.filter(item => item.status === status);
       setFilteredData(filtered); // Filtered data based on status
     }
     setSelectedStatus(status); // Update selected status
@@ -73,13 +73,17 @@ function Web() {
         <div className="esd">
           <input type="date" placeholder="" className="dr"></input> to
           <input type="date" placeholder="" className="es"></input>
-          <select className="but12390" value={selectedStatus} onChange={(e) => filterData(e.target.value)}>
 
-            <option value="All">All</option>
-            <option value="Requested">Requested</option>
-            <option value="Confirmed">Confirmed</option>
-            <option value="Cancelled">Cancelled</option>
-          </select>
+          <select
+  className="but12390"
+  value={selectedStatus}
+  onChange={(e) => filterData(e.target.value)}
+>
+  <option value="All">All</option>
+  <option value="Requested">Requested</option>
+  <option value="Confirmed">Confirmed</option>
+  <option value="Cancelled">Cancelled</option>
+</select>
           <button className="sel">View Report</button>
         </div>
 
@@ -102,10 +106,10 @@ function Web() {
                   <td className='intiate-td'>{billingItem.patientName}</td>
                   <td className='intiate-td'>{billingItem.mobileNumber}</td>
                   <td className='intiate-td'>{billingItem.doctorName}</td>
-                  <td className='intiate-td'>{billingItem.emailAddress}</td>
-                  <td className='intiate-td'>{billingItem.startDateTime}</td>
-                  <td className='intiate-td'>{billingItem.endDateTime}</td>
-                  <td className='intiate-td'>{billingItem.appointmentStatus}</td>
+                  <td className='intiate-td'>{billingItem.email}</td>
+                  <td className='intiate-td'>{billingItem.startTime}</td>
+                  <td className='intiate-td'>{billingItem.endTime}</td>
+                  <td className='intiate-td'>{billingItem.status}</td>
                 </tr>
               ))}
             </tbody>

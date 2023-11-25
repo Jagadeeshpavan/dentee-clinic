@@ -1,89 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Emailpage.css';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import { BiArrowBack } from 'react-icons/bi';
-import { BiSearch } from 'react-icons/bi';
+import { Link } from 'react-router-dom';
 import { AiOutlineArrowLeft, AiOutlineStepBackward, AiOutlineStepForward } from 'react-icons/ai';
+import { BiSearch } from 'react-icons/bi';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
+import axios from 'axios';
 
 const PromotionalEmailReport = () => {
-  // Dummy data for promotional email reports
-  const dummyReports = [
-    {
-      sentOn: '2023-09-10',
-      deliveryOn: '2023-09-11',
-      subject: 'Sample Email',
-      emailCount: 100,
-      isAttachment: 'No',
-      attachmentCount: 0,
-      createdBy: 'John Doe',
-    },
-    {
-      sentOn: '2023-09-10',
-      deliveryOn: '2023-09-11',
-      subject: 'Sample Email',
-      emailCount: 100,
-      isAttachment: 'No',
-      attachmentCount: 0,
-      createdBy: 'John Doe',
-    },
-    {
-      sentOn: '2023-09-10',
-      deliveryOn: '2023-09-11',
-      subject: 'Sample Email',
-      emailCount: 100,
-      isAttachment: 'No',
-      attachmentCount: 0,
-      createdBy: 'John Doe',
-    },
-    {
-      sentOn: '2023-09-10',
-      deliveryOn: '2023-09-11',
-      subject: 'Sample Email',
-      emailCount: 100,
-      isAttachment: 'No',
-      attachmentCount: 0,
-      createdBy: 'John Doe',
-    },
-    {
-      sentOn: '2023-09-10',
-      deliveryOn: '2023-09-11',
-      subject: 'Sample Email',
-      emailCount: 100,
-      isAttachment: 'No',
-      attachmentCount: 0,
-      createdBy: 'John Doe',
-    },
-    {
-      sentOn: '2023-09-10',
-      deliveryOn: '2023-09-11',
-      subject: 'Sample Email',
-      emailCount: 100,
-      isAttachment: 'No',
-      attachmentCount: 0,
-      createdBy: 'John Doe',
-    },
-    // Your dummy report objects here
-  ];
-
-  // Pagination settings
-  const itemsPerPage = 5;
+  const [reports, setReports] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentReports = dummyReports.slice(indexOfFirstItem, indexOfLastItem);
+  const currentReports = reports.slice(indexOfFirstItem, indexOfLastItem);
 
-  // Handle page change
   const handlePageChange = (pageNumber) => {
-    // Scroll to the top of the page
     window.scrollTo(0, 0);
     setCurrentPage(pageNumber);
   };
 
   const isFirstPage = currentPage === 1;
-  const isLastPage = indexOfLastItem >= dummyReports.length;
+  const isLastPage = indexOfLastItem >= reports.length;
+
+  useEffect(() => {
+    axios.get('http://localhost:5004/second')
+      .then((response) => {
+        console.log('API Response:', response.data);
+        setReports(response.data);
+      })
+      .catch((error) => {
+        console.error('Failed to fetch data:', error);
+      });
+  }, []);
 
   return (
     <>
@@ -106,7 +56,7 @@ const PromotionalEmailReport = () => {
               <BiSearch />
             </button>
           </div>
-          
+
           <br></br>
           <table className="email-table-333">
             <thead>
@@ -136,7 +86,7 @@ const PromotionalEmailReport = () => {
               ))}
             </tbody>
           </table>
-          
+
           <div className='pat-mail'>
             <button
               className='but-mail'

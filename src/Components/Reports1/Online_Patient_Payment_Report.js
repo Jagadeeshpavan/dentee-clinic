@@ -1,77 +1,30 @@
-import React, { useState } from 'react';
-import { AiOutlineArrowLeft, AiOutlineStepBackward, AiOutlineStepForward } from "react-icons/ai";
+
+import React, { useState, useEffect } from 'react';
+import { AiOutlineArrowLeft, AiOutlineStepBackward, AiOutlineStepForward } from 'react-icons/ai';
 import './Online_Patient_Payment_Report.css';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
 
-// Sample payment data
-const paymentData = [
-  {
-    Patientname: 'John Doe',
-    casenumber: '001',
-    Recipitnumber: '12345',
-    Date: '12-09-2023',
-    Amount: '23000',
-    Paymentsource: 'Credit Card',
-    Paymentstatus: 'Paid',
-  },
-  {
-    Patientname: 'Alice Smith',
-    casenumber: '002',
-    Recipitnumber: '12346',
-    Date: '13-09-2023',
-    Amount: '15000',
-    Paymentsource: 'Cash',
-    Paymentstatus: 'Paid',
-  },
-  {
-    Patientname: 'Bob Johnson',
-    casenumber: '003',
-    Recipitnumber: '12347',
-    Date: '14-09-2023',
-    Amount: '18500',
-    Paymentsource: 'Cheque',
-    Paymentstatus: 'Paid',
-  },
-  {
-    Patientname: 'Emma Wilson',
-    casenumber: '004',
-    Recipitnumber: '12348',
-    Date: '15-09-2023',
-    Amount: '27000',
-    Paymentsource: 'Debit Card',
-    Paymentstatus: 'Pending',
-  },
-  {
-    Patientname: 'Michael Brown',
-    casenumber: '005',
-    Recipitnumber: '12349',
-    Date: '16-09-2023',
-    Amount: '19500',
-    Paymentsource: 'Online Transfer',
-    Paymentstatus: 'Paid',
-  },
-  {
-    Patientname: 'Sophia Miller',
-    casenumber: '006',
-    Recipitnumber: '12350',
-    Date: '17-09-2023',
-    Amount: '30000',
-    Paymentsource: 'Cash',
-    Paymentstatus: 'Paid',
-  },
-  // You can add more data as needed
-];
-
-const itemsPerPage = 3;
-
 function Online_Patient_Payment_Report() {
+  const [paymentData, setPaymentData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [value, setValue] = useState('');
+  const searchFields = [
+    'Patientname',
+    'casenumber',
+    'Recipitnumber',
+    'Date',
+    'Amount',
+    'Paymentsource',
+    'Paymentstatus',
+  ];
 
+  const itemsPerPage = 3;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currenttrain = paymentData.slice(indexOfFirstItem, indexOfLastItem);
+  const currentTrain = paymentData.slice(indexOfFirstItem, indexOfLastItem);
 
   const isFirstPage = currentPage === 1;
   const isLastPage = indexOfLastItem >= paymentData.length;
@@ -81,6 +34,23 @@ function Online_Patient_Payment_Report() {
       setCurrentPage(pageNumber);
     }
   };
+
+  useEffect(() => {
+    // Fetch payment data from the backend
+    fetch('http://localhost:5001/api/payments')
+      .then((response) => response.json())
+      .then((data) => setPaymentData(data))
+      .catch((error) => console.error('Error fetching payment data:', error));
+  }, []); // Run this effect only once on component mount
+
+  const filterBySearchTerm = (payment) => {
+    const lowerCaseSearchTerm = searchTerm.toLowerCase();
+    return searchFields.some((field) =>
+      payment[field].toLowerCase().includes(lowerCaseSearchTerm)
+    );
+  };
+
+  const filteredTrain = currentTrain.filter(filterBySearchTerm);
 
   return (
     <>
@@ -110,21 +80,30 @@ function Online_Patient_Payment_Report() {
             <label className='label-7777'>
               <input
                 type="date"
-                value=""
+                value="date"
                 className='dl'
+                onChange={(e) => setValue(e.target.value)}
+                required
               />
             </label>
             <label className='label-7777'>
               <input
                 type="date"
-                value=""
+                value="date"
                 className='ld'
+                onChange={(e) => setValue(e.target.value)}
+                required
               />
             </label>
             <button className='even'>View Report</button>
-          </div>
-          <div>
-            <input type='search' placeholder='search' className='holder'></input>
+         
+            <input
+              type='search'
+              placeholder='Search by Patient Name, Case Number, etc.'
+              className='holder'
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </div>
           <br></br>
           <div className='second'>
@@ -141,7 +120,7 @@ function Online_Patient_Payment_Report() {
                 </tr>
               </thead>
               <tbody>
-                {currenttrain.map((payment, index) => (
+                {filteredTrain.map((payment, index) => (
                   <tr key={index} className='online-payment-tabledata'>
                     <td className='td-tabledata'>{payment.Patientname}</td>
                     <td className='td-tabledata'>{payment.casenumber}</td>

@@ -6,16 +6,12 @@ import { Link } from 'react-router-dom';
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { PiWechatLogoFill } from 'react-icons/pi';
 import { BsArrowsMove } from 'react-icons/bs';
-import { BsFillQuestionCircleFill } from 'react-icons/bs';
 import { AiTwotonePrinter } from 'react-icons/ai';
 import { SiMicrosoftexcel } from 'react-icons/si';
-import { BsBoxArrowInRight } from 'react-icons/bs';
 import { PiArrowsCounterClockwiseFill } from 'react-icons/pi';
 import { FiSettings } from 'react-icons/fi';
-import { AiOutlineClose } from 'react-icons/ai';
 import POP from './POP';
 import * as XLSX from 'xlsx';
-import { Refresh } from '@mui/icons-material';
 
 function Navbar() {
   const [isChecked, setIsChecked] = useState(false);
@@ -77,7 +73,6 @@ function Navbar() {
 
     setIsFullscreen(!isFullscreen);
   };
-
   const toggleContentMove = () => {
     setIsContentMoved(!isContentMoved);
   };
@@ -94,8 +89,6 @@ function Navbar() {
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(date).toLocaleDateString(undefined, options);
   };
-
-
   const options = [
     { value: 'Add Treatment', label: 'Add Treatment' },
     { value: 'Add Precription', label: 'Add Precription' },
@@ -105,28 +98,25 @@ function Navbar() {
     { value: 'Send Whatsapp Sms', label: 'Send Whatsapp Sms' },
 
   ];
-
-
-
   const handlePrintClick = () => {
     window.print();
   };
-
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
     console.log('Checkbox changed');
   };
-
   const handleClick = () => {
     setShowPopup(!showPopup);
     console.log('Button clicked');
   };
-
   const handleClose = () => {
     setShowPopup(false);
     console.log('Button press');
   };
-
+  const handleCheckin = () => {
+    console.log('Check-in clicked'); 
+  };
+  
   return (
     <div className="maincontweb">
       <div className={`page-container ${isContentMoved ? 'flex-move-right' : ''}`}>
@@ -145,15 +135,11 @@ function Navbar() {
               </button>
             </div>
             <div className="Joha-icons-33">
-              {/* <button className="Joha-sai-2">
-                <BsFillQuestionCircleFill className="Joha-icon-1" />
-              </button> */}
+
               <button className="Joha-sai-2" onClick={toggleFullscreen}>
                 <BsArrowsMove style={{ color: 'blue' }} className="Joha-icon-1" />
               </button>
-              {/* <button className="Joha-sai-2" onClick={toggleContentMove}>
-                <BsBoxArrowInRight className="Joha-icon-1" />
-              </button> */}
+           
             </div>
             <hr />
           </div>
@@ -200,7 +186,6 @@ function Navbar() {
             </div>
           </div>
         </nav>
-      {/* <  button onClick={toggleContentMove}></button> */}
         <table className="Joyaci-table">
           <button className="Joyaci-button1" onClick={() => handleStatusChange('Scheduled')}>
             Scheduled <button className="shayam">0</button>
@@ -223,38 +208,18 @@ function Navbar() {
             <PiWechatLogoFill /> {currentStatus} Patients
           </h4>
         </div>
-        {/* <div className="supriya">
-          <div className="custom-dropdown">
-            <button className="custom-dropdown-toggle" onClick={() => setOptionsOpen(!optionsOpen)}>
-              <FiSettings />
-            </button>
-            {optionsOpen && (
-              <div className="custom-dropdown-options">
-                {options.map((option) => (
-                  <div className='flex462'>
-                 <Link to='/Appointment_header'> <button
-                    key={option.value}
-                    className={`custom-dropdown-option ${selectedOption === option.value ? 'selected' : ''}`}
-                    onClick={() => handleDropdownChange(option.value)}
-                  >
-                    {option.label}
-                  </button></Link>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div> */}
 
        <div className="supriya">
           <div className="custom-dropdown">
+          <button onClick={handleCheckin}>Checkin</button>
+
             <button className="custom-dropdown-toggle" onClick={() => setOptionsOpen(!optionsOpen)}>
               <FiSettings />
             </button>
             {optionsOpen && (
               <div className="custom-dropdown-options">
                 <div className='flex462'>
-                  <Link to='/Appointment_header' className='anchor259'>
+                  <Link to='/Appointment_header'>
                     <button
                       key={options[0].value}
                       className={`custom-dropdown-option ${selectedOption === options[0].value ? 'selected' : ''}`}
@@ -263,79 +228,11 @@ function Navbar() {
                       {options[0].label}
                     </button>
                   </Link>
-
-
-                  {/* <Link to={`/Appointment_header/${patient._id}`} className='anchor259'>
-  <button
-    className='custom-dropdown-option'
-    onClick={() => toggleOptions(patient._id)}
-  >
-    View Details
-  </button>
-</Link> */}
                 </div>
-                {/* <div className='flex462'>
-                  <Link to='/Appointment_header'>
-                    <button
-                      key={options[1].value}
-                      className={`custom-dropdown-option ${selectedOption === options[1].value ? 'selected' : ''}`}
-                      onClick={() => handleDropdownChange(options[1].value)}
-                    >
-                      {options[1].label}
-                    </button>
-                  </Link>
-                </div> */}
-                {/* <div className='flex462'>
-                  <Link to='/Appointment_header'>
-                    <button
-                      key={options[2].value}
-                      className={`custom-dropdown-option ${selectedOption === options[2].value ? 'selected' : ''}`}
-                      onClick={() => handleDropdownChange(options[2].value)}
-                    >
-                      {options[2].label}
-                    </button>
-                  </Link>
-                </div> */}
-                {/* <div className='flex462'>
-                  <Link to='/Appointment_header'>
-                    <button
-                      key={options[3].value}
-                      className={`custom-dropdown-option ${selectedOption === options[3].value ? 'selected' : ''}`}
-                      onClick={() => handleDropdownChange(options[3].value)}
-                    >
-                      {options[3].label}
-                    </button>
-                  </Link>
-                </div> */}
-                {/* <div className='flex462'>
-                  <Link to='/Appointment_header'>
-                    <button
-                      key={options[4].value}
-                      className={`custom-dropdown-option ${selectedOption === options[4].value ? 'selected' : ''}`}
-                      onClick={() => handleDropdownChange(options[4].value)}
-                    >
-                      {options[4].label}
-                    </button>
-                  </Link>
-                </div> */}
-                {/* <div className='flex462'>
-                  <Link to='/Appointment_header'>
-                    <button
-                      key={options[5].value}
-                      className={`custom-dropdown-option ${selectedOption === options[5].value ? 'selected' : ''}`}
-                      onClick={() => handleDropdownChange(options[5].value)}
-                    >
-                      {options[5].label}
-                    </button>
-                  </Link>
-                </div> */}
               </div>
             )}
           </div>
-        </div> 
-
-
-
+        </div>
       </div>
     </div>
   );

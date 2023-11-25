@@ -1,32 +1,48 @@
 import './Addpayment.css';
-import { AiOutlineArrowLeft, AiFillCreditCard } from "react-icons/ai";
-import { BiSolidFlagAlt } from "react-icons/bi";
-import { CiSearch } from "react-icons/ci";
-import Popup from 'reactjs-popup';
-import { Link, useLocation } from 'react-router-dom';
 import React, { useState } from 'react';
+import { AiOutlineArrowLeft, AiFillCreditCard } from 'react-icons/ai';
+import { BiSolidFlagAlt } from 'react-icons/bi';
+import { CiSearch } from 'react-icons/ci';
+import Popup from 'reactjs-popup';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
 
+function AddPayment() {
+  const [selectedPaymentMode, setSelectedPaymentMode] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
+  const [searchFieldValue, setSearchFieldValue] = useState('');
+  const [receivedAmount, setReceivedAmount] = useState('');
+ 
 
-function Add_Payment() {
+  const handleSave = async () => {
+    try {
    
-  const [buttonText, setButtonText] = useState('Show');
+      const response = await axios.post('http://localhost:3006/api/payments', {
+        date: selectedDate,
+        receivedAmount: receivedAmount,
+        paymentMode: selectedPaymentMode,
+      });
+
+      console.log(response.data);
+      // Handle the response as needed (e.g., show a success message)
+    } catch (error) {
+      console.error(error);
+      // Handle the error (e.g., show an error message)
+    }
+  };
+
   const handleClick = () => {
-   if (buttonText === 'Show') {
-     setButtonText('Hide');
-   } else {
-     setButtonText('Show');
-   }
- };
+    // Toggle logic for additional content
+  };
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+  };
+  const handleAmountChange = (event) => {
+    setReceivedAmount(event.target.value);
+  };
 
-
-
-  const [selectedPaymentMode, setSelectedPaymentMode] = useState(''); // State for selected payment mode
-
-
-
-  
   return (
     <>  
     <Navbar/>
@@ -39,14 +55,16 @@ function Add_Payment() {
         </div>
         <div className='apay-selc'>
           <div className='apay-d-s'>
-            <div className='add-p-date'><input type='date' className='add-p-date-1'></input></div>
+          <div className='add-p-date'>
+        <input
+          type='date'
+          className='add-p-date-1'
+          value={selectedDate}
+          onChange={handleDateChange}
+        />
+      </div>
             <button className='a-search-1'><CiSearch className='a-search-1234' />
-              <select className='a-search-123'><option></option>
-                <option>All</option>
-                <option>Mobile No</option>
-                <option>Case No</option>
-                <option>Name</option>
-              </select>
+              
             </button>
             <input className='apay-search' placeholder='search'></input>
 
@@ -56,7 +74,14 @@ function Add_Payment() {
           <div className='t-p-a'>Total Payable Amount</div>
           <div className='a-paynow'>
             <div className='a-paynow-1'> PayNow :</div>
-            <div className='a-paynow-2'><input className='a-paynow-2-1' placeholder='Received Amount'></input></div>
+            <div className='a-paynow-2'>
+        <input
+          className='a-paynow-2-1'
+          placeholder='Received Amount'
+          value={receivedAmount}
+          onChange={handleAmountChange}
+        />
+      </div>
             <div className='a-paynow-3'><AiFillCreditCard className='rec-icon' /></div>
           </div>
           <div className='apay-mode'>
@@ -73,41 +98,7 @@ function Add_Payment() {
                   position="bottom left"
                   open={true}
                 >
-                  {/* <table className='pay-table-nikhil-a1'>
-                    <thead>
-                      <tr>
-                        <th className='pay-table-head-a2'>Select</th>
-                        <th className='pay-table-head-a2' >Bill</th>
-                        <th className='pay-table-head-a2' >Net Cost</th>
-                        <th className='pay-table-head-a2'>Balance</th>
-                        <th className='pay-table-head-a2'>From Advance</th>
-                        <th className='pay-table-head-a2'>Paid Now</th>
-                        <th className='pay-table-head'>Due After</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="some-1-a3">
-                        <td>07-09</td>
-                        <td>001</td>
-                        <td>john</td>
-                        <td>200</td>
-                        <td>Active</td>
-                        <td>none</td>
-                        <td>none</td>
-                      </tr>
-                    </tbody>
-                  </table> */}
-                  <div className='add-pay-ni'>
-                     <div className='add-pay-ni-1'>
-                     <div className='add-che'> <div className='ax-1'><BiSolidFlagAlt className='ax-2'/></div> 
-                     <input  className= 'add-che-1' placeholder='Cheque Number'></input></div>
-                     <div className='add-pay-d'><input type='date' className='add-pay-d-1'></input></div>
-                     <div className='add-pay-ni-2'>
-                     <div className='add-bankn'><div className='ab-1'><BiSolidFlagAlt className='ab-2'/></div> 
-                     <input  className= 'add-bankn-1' placeholder='Bank Name'></input></div>
-                     </div>
-                     </div>
-                  </div>
+                 
                 </Popup>
               )}
             </div>
@@ -127,7 +118,7 @@ function Add_Payment() {
           <div>
             <Popup trigger=
             { <div>
-               <button  className= 'a-show' onClick={handleClick}>{buttonText}</button>
+               <button  className= 'a-show' onClick={handleClick}>Show</button>
              </div>}
                 position="bottom left">
                    <table className='pay-table-nikhil-a1'>
@@ -157,7 +148,7 @@ function Add_Payment() {
             <div className='apay-f3'>Billed Invoices With Pending Payments</div>
           </div>
           <div className='apay-ff1'>
-            <div className='apay-ff2'><button className='apay-save'>Save</button></div>
+            <div className='apay-ff2'><button className='apay-save' onClick={handleSave}>Save</button></div>
             <div className='apay-ff3'><button className='apay-cancel'>Cancel</button></div>
           </div>
         </div>
@@ -167,4 +158,4 @@ function Add_Payment() {
   );
 }
 
-export default Add_Payment;
+export default AddPayment;

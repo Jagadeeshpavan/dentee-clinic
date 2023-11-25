@@ -1,69 +1,54 @@
-import React, { useState } from 'react'; // Import useState from 'react'
+import React, { useState, useEffect } from 'react';
 import './PatientPersonalReport.css';
 import { BiSearch } from 'react-icons/bi';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
+import axios from 'axios';
 import { AiOutlineArrowLeft, AiOutlineStepBackward, AiOutlineStepForward } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
+const itemsPerPage = 3;
+
 const PatientPersonalReport = () => {
-  // Sample patient personal report data
-  const patientPersonalReportData = [
-    {
-      id: 1,
-      patientName: 'Raju',
-      mobile: '987654321',
-      attribute: 'School Name',
-      value: 'ABC School',
-    },
-    {
-      id: 2,
-      patientName: 'John',
-      mobile: '123456789',
-      attribute: 'Date of Anniversary',
-      value: '01/15/1990',
-    },
-    {
-      id: 3,
-      patientName: 'Alice',
-      mobile: '987612345',
-      attribute: 'Tags',
-      value: 'Tag1, Tag2, Tag3',
-    },
-    {
-      id: 4,
-      patientName: 'Bob',
-      mobile: '789012345',
-      attribute: 'Company Name',
-      value: 'XYZ Company',
-    },
-    {
-      id: 5,
-      patientName: 'Jane',
-      mobile: '345678901',
-      attribute: 'Spouse Name',
-      value: 'Spouse1',
-    },
-    {
-      id: 6,
-      patientName: 'Samantha',
-      mobile: '456789012',
-      attribute: 'School Name',
-      value: 'XYZ School',
-    },
-  ];
-  const itemsPerPage = 3;
+  const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchText, setSearchText] = useState('');
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:5001/patient-personal-report');
+      setData(response.data);
+      console.log('Fetched Data:', response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const filterData = (data) => {
+    return data.filter((item) => {
+      return (
+        (item.patientName && item.patientName.toLowerCase().includes(searchText.toLowerCase())) ||
+        (item.mobile && item.mobile.toLowerCase().includes(searchText.toLowerCase())) ||
+        (item.attribute && item.attribute.toLowerCase().includes(searchText.toLowerCase())) ||
+        (item.value && item.value.toLowerCase().includes(searchText.toLowerCase()))
+      );
+    });
+  };
+  
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const current = patientPersonalReportData.slice(indexOfFirstItem, indexOfLastItem);
+  const current = filterData(data).slice(indexOfFirstItem, indexOfLastItem);
 
   const isFirstPage = currentPage === 1;
-  const isLastPage = indexOfLastItem >= patientPersonalReportData.length;
+  const isLastPage = indexOfLastItem >= filterData(data).length;
 
   const handlePageChange = (pageNumber) => {
-    if (pageNumber >= 1 && pageNumber <= Math.ceil(patientPersonalReportData.length / itemsPerPage)) {
+    if (pageNumber >= 1 && pageNumber <= Math.ceil(filterData(data).length / itemsPerPage)) {
       setCurrentPage(pageNumber);
     }
   };
@@ -85,7 +70,12 @@ const PatientPersonalReport = () => {
         </div>
         <div className="personalreport-total">
           <div className="personalreport-buttons">
-            <input className="personalreport-search" placeholder="search" />
+            <input
+              className="personalreport-search"
+              placeholder="search"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
             <button className="search-btnpersonal">
               <BiSearch />
             </button>

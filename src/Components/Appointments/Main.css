@@ -41,7 +41,6 @@
  .Joha-sai-2{
    height: 41px;
    margin-top: 75%;
-   /* margin-left: 50%; */
  }
  
  .Nani {
@@ -51,24 +50,12 @@
    width: 68%;
    overflow-y: auto;
   
- }
- 
- 
- 
- 
+ } 
  li {
    margin-right: 30px;
  }
  
- /* a {
-   text-decoration: none;
-   color: #fff;
- }
  
- a:hover {
-   text-decoration: underline;
- }
-  */
  .Joha-Page {
    list-style: none;
    padding: 0;
@@ -76,7 +63,6 @@
    flex-direction: row;
    justify-content: flex-start;
    margin-top: 10px;
-   /* height: 45px; */
    
  }
  .Joyaci-table {
@@ -163,8 +149,6 @@
  }
  .supriya {
  height:680px;
- /* width: 327px; */
- /* height:100%; */
  width: 25%;
  border: 1px solid rgb(158, 155, 155);
  margin-left:73%;
@@ -173,7 +157,6 @@
  color: black;
  overflow-y: scroll; 
  max-height: 350px; 
- /* margin-left: 944px; */
  }
  .Jona-button{
  background-color: blue;
@@ -191,12 +174,6 @@
  .Patients-saivas{
  margin-left: 73%;
  }
- /* *{
- padding: 0;
- margin: 0;
- } */
- 
- 
  .flex-move-right {
    transform : scaleX(1.5);
    margin-left:23%;
@@ -314,83 +291,39 @@
  margin-top: -28%;
     margin-left: 49%;
  }
- 
- /* .xc{
- margin-left: 20px;
- width: 150px;
- height: 20px;
- margin-top: 20px;
- } */
+
  .sai-Selct-13{
  display: flex;
  flex-direction: row;
  margin-left: 49%;
  }
- /* 
- .ff{
- margin-left: 20px;
- margin-top: 60px;
- color: black;
- } */
+
  .sai-Selct{
- margin-left: 30px;
- margin-top: 7px;
- width: 186px;
- height: 45px;
+  margin-left: 61px;
+  margin-top: 32px;
+  width: 186px;
+  height: 45px;
  }
- 
- /* .hn{
- margin-left: 55px;
- margin-top: 36px;
- width: 440px;
- height: 45px;
- 
- } */
- /* .kl{
- display: flex;
- flex-direction: row;
- } */
+ .sai-Selct-1{
+  margin-left: 30px;
+  margin-top: 8px;
+  width: 186px;
+  height: 45px;
+ }
+
  
  .sai-Note-1{
  margin-top: 34px;
  margin-left: 25px;
  color: black;
  }
- /* .lf{
- margin-left: 50px;
- margin-top: 10px;
- width: 492px;
- height: 50px;
- } */
- /* .rty{
- display: flex;
- flex-direction: row;
- margin-top: 30px;
- }
- .iu{
- padding-left:10px ;
- }
- .jkl{
- display: flex;
- flex-direction: row;
- margin-left: 150px;
- margin-top: 30px;
- 
- }
- .ty{
- padding-left: 10px;
- margin-left: 90px;
- margin-top: -5px;
- } 
- .exi{
- margin-right: 180px;
- } */
+
  .sai-Popup-close{
  
  display: flex;
  flex-direction: row;
  margin-left: 500px;
- margin-top: 10%;
+ margin-top: -8%;
 
  }
  .sai-save{
@@ -412,29 +345,6 @@
  cursor: pointer;
 
  }
- 
- /* .wrt{
- height: 45px;
- width: 282px;
- margin-left:-8px;
- margin-top: -14px;
- 
- } */
- /* .yo{
- margin-top: 10px;
- height: 40px;
- width: 114px;
- margin-left: 296px;
- 
- } */
- /* .time-icon{
- height: 45px ;
- width: 50px;
- border:none;
- margin-left: 5px;
- padding-top: 20px;
- }  */
- 
  .petty-exce{
    height: 40px;
    margin-top: 5%;
@@ -454,46 +364,7 @@
  .Jona-11{
  margin-top: 11px;
  }
- 
- /* 
- .page-container {
- transition: all 0.3s ease;
- width:100%; 
- }
- 
- .flex-move-right {
- transform : scaleX(1.5);
- margin-left:23%;
- padding-right: -150px;
- } */
- 
- /* *{
- margin: 0;
- padding: 0;
- box-sizing: border-box;
- } */
- /* .er{
- border: 1px solid;
- background-color: blue;
- color: white;
- height: 50px;
- width: 670px;
- display: flex;
- flex-direction: row;
- 
- }
- .kar{
- margin-left: 400px;
- margin-top: 5px;
- } */
- 
- /* .asd{
- height: 10 0vh;
- width: 670px;
- border: 1px solid black;
- text-align: center;
- 
- } */
+
  .sai-vaneey{
  
  display: flex;
@@ -523,12 +394,13 @@
  margin: 10px;
  
  }
- /* .af{
- margin-left: 25px;
- margin-top: 24px;
- width: 500px;
- height: 45px;
- } */
+ .sai-Selct-pop-1{
+  margin-left: 20px;
+  margin-top: 10px;
+  color: black;
+  margin: 10px;
+ }
+
  .sai-chairs-new{
  margin-left: 55px;
  margin-top: 31px;
@@ -542,25 +414,14 @@
  margin-top: 10%;
  }
  
- /* .rf{
- margin-left: 25px;
- color: black;
- } */
+
  .sai-Note-11{
  margin-left: 50px;
  margin-top: 10px;
  width: 421px;
  height: 90px;
  }
- 
- /* .rty{
- display: flex;
- flex-direction: row;
- margin-top: 30px;
- }
- .iu{
- padding-left:10px ;
- } */
+
  .View-sai-2{
  display: flex;
  flex-direction: row;
@@ -593,10 +454,6 @@
  height: 30px;
  width: 200px;
  }
- /* .ans{
- margin-top: 20px;
- margin-left: -20px;
- } */
  .sai-app-pop{
  height: 33px;
  width: 363px;
@@ -608,10 +465,7 @@
  display: flex;
  flex-direction: row;
  }
- /* .app-mobile{
- margin-left: 500px;
-   margin-top: 10px;
- } */
+ 
  .sai-app-pick{
  
  margin-top: 20px;
@@ -796,11 +650,6 @@ height: 22px;
   background-color: #3d50ae;
 
  }
-
-
-
-
-
 .flex462{
   display: flex;
   flex-direction: column;
@@ -808,8 +657,6 @@ height: 22px;
   align-items: center;
   margin-left: 30%;
 }
-
-
 .custom-dropdown-toggle{
   margin-top: 10%;
   background-color: #007bff;
@@ -818,12 +665,9 @@ height: 22px;
   width: 30px;
   height: 30px;
   cursor: pointer;
-
 }
-
 .custom-dropdown-options{
   margin-top: 3%;
-  /* background-color: whitesmoke; */
   width: 80%;
   margin-left: 11%;
   align-items: center;
@@ -833,13 +677,10 @@ height: 22px;
   background-color: white;
   cursor: pointer;
   border: none;
-  /* margin: 3px; */
   color: black;
   font-size: small;
   width: 200px;
-  /* height: 45px; */
   padding: 6px;
-
 }
 
 .custom-dropdown-option:hover{

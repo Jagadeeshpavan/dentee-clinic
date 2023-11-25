@@ -1,60 +1,30 @@
-import React, { useState } from 'react';
-import { AiOutlineArrowLeft } from "react-icons/ai";
+import React, { useState, useEffect } from 'react';
+import { AiOutlineArrowLeft, AiOutlineStepBackward, AiOutlineStepForward } from "react-icons/ai";
 import './WaitingAnalysis.css';
 import { Link } from 'react-router-dom';
-import { AiOutlineStepBackward, AiOutlineCaretRight, AiOutlineStepForward } from 'react-icons/ai';
+import axios from 'axios';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
-
-const data = [
-  {
-    date: '13-09-2023',
-    patientName: 'Karthik',
-    casenumber: '1233445',
-    reciptnumber: '10:00 AM',
-    appointmentTime: '30MIN',
-    checkIn: '10:10 AM',
-    waitingTime: '10:40 AM',
-    treatmentStartTime: '10:10 AM',
-    treatmentCompletedTime: '10:40 AM',
-    treatment: 'Blood Test',
-    // name: 'John Doe',
-  },
-
-  {
-    date: '13-09-2023',
-    patientName: 'abhi',
-    casenumber: '1233445',
-    reciptnumber: '10:00 AM',
-    appointmentTime: '30MIN',
-    checkIn: '10:10 AM',
-    waitingTime: '10:40 AM',
-    treatmentStartTime: '10:10 AM',
-    treatmentCompletedTime: '10:40 AM',
-    treatment: 'Blood Test',
-    // name: 'John Doe',
-  },
-
-  {
-    date: '13-09-2023',
-    patientName: 'siva',
-    casenumber: '1233445',
-    reciptnumber: '10:00 AM',
-    appointmentTime: '30MIN',
-    checkIn: '10:10 AM',
-    waitingTime: '10:40 AM',
-    treatmentStartTime: '10:10 AM',
-    treatmentCompletedTime: '10:40 AM',
-    treatment: 'Blood Test',
-    // name: 'John Doe',
-  },
-  // Add other data here
-];
 
 const itemsPerPage = 2;
 
 function WaitingAnalysis() {
+  const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:5001/waiting-analysis');
+      setData(response.data);
+      console.log('Fetched Data:', response.data); // Log the fetched data
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -114,7 +84,6 @@ function WaitingAnalysis() {
                 <th className='th-qg'>TreatmentStartTime</th>
                 <th className='th-qg'>TreatmentCompleted Time</th>
                 <th className='th-qg'>Treatment</th>
-                {/* <th className='th-qg'>name</th> */}
               </tr>
             </thead>
             <tbody className='body-true'>
@@ -130,7 +99,6 @@ function WaitingAnalysis() {
                   <td className='td-midd'>{item.treatmentStartTime}</td>
                   <td className='td-midd'>{item.treatmentCompletedTime}</td>
                   <td className='td-midd'>{item.treatment}</td>
-                  {/* <td className='td-midd'>{item.name}</td> */}
                 </tr>
               ))}
             </tbody>

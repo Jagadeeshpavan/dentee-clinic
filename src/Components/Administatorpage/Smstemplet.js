@@ -1,89 +1,119 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Smstemplet.css';
 import { AiOutlineArrowLeft, AiOutlineStepBackward, AiOutlineStepForward } from 'react-icons/ai';
-import { BiSearch } from 'react-icons/bi';
-import { BrowserRouter as Router, Routes, Route, Link, useParams } from 'react-router-dom';
+import { BiSearch } from 'react-icons/bi';   
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
 
 function YourComponent() {
-  // Dummy data for SMS templates
-  const initialTableData = [
-    { title: 'Template 1', message: 'This is the first SMS template' },
-    { title: 'Template 2', message: 'This is the second SMS template' },
-    { title: 'Template 3', message: 'This is the third SMS template' },
-    { title: 'Template 4', message: 'This is the first SMS template' },
-    { title: 'Template 5', message: 'This is the second SMS template' },
-    { title: 'Template 6', message: 'This is the third SMS template' },
-    // Add more templates as needed
-  ];
-
+  const [tableData, setTableData] = useState([]);        
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [message, setMessage] = useState('');
-  const [tableData, setTableData] = useState(initialTableData);
-  const [editIndex, setEditIndex] = useState(null); // To track the index of the row being edited
-
-  // Pagination settings
-  const itemsPerPage = 5;
+  const [editIndex, setEditIndex] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentTableData = tableData.slice(indexOfFirstItem, indexOfLastItem);
+  const itemsPerPage = 5;
 
-  // Handle page change
+  useEffect(() => {
+    fetchSmsTemplates();
+  }, []);
+
+  const fetchSmsTemplates = async () => {
+    try {
+      const response = await axios.get('/sms-template');
+      setTableData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handlePageChange = (pageNumber) => {
-    // Scroll to the top of the page
     window.scrollTo(0, 0);
     setCurrentPage(pageNumber);
   };
 
   const isFirstPage = currentPage === 1;
-  const isLastPage = indexOfLastItem >= tableData.length;
+  const isLastPage = tableData.length <= currentPage * itemsPerPage;
 
   const openModal = () => {
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
+  const closeModal = () => { 
     setIsModalOpen(false);
-    setEditIndex(null); // Clear the edit index when closing the modal
-  };
-
-  const handleSave = () => {
+    setEditIndex(null);
+  };       
+  
+  const handleSave = async () => {
     if (title && message) {
       if (editIndex !== null) {
-        // If an edit is in progress, update the existing data
-        const updatedData = [...tableData];
-        updatedData[editIndex] = { title, message };
-        setTableData(updatedData);
-        setEditIndex(null); // Clear edit mode
+        try {
+          await axios.put(`/sms-template/${tableData[editIndex]._id}`, { title, message });
+          const updatedData = [...tableData];
+          updatedData[editIndex] = { ...updatedData[editIndex], title, message };
+          setTableData(updatedData);
+        } catch (error) {
+          console.error(error);
+        }
+        setEditIndex(null);
       } else {
-        // Otherwise, add new data
-        const newData = { title, message };
-        setTableData([...tableData, newData]);
+        const smstemplates = {
+          title: title,
+          message: message,
+        };
+
+        // Send a POST request to the backend API
+        axios.post('http://localhost:5001/sms-template', smstemplates)
+          .then(response => {   
+            console.log('SMS saved successfully');
+            // Optionally, you can perform any necessary actions after a successful save
+          })
+          .catch(error => {
+            console.error('Failed to save SMS:', error);
+            // Handle the error, e.g., display an error message to the user
+          });
+
+        closeModal();
+        setTitle('');
+        setMessage('');
       }
-      closeModal();
-      setTitle('');
-      setMessage('');
     }
   };
 
-  const handleEdit = (index) => {
-    // Populate the popup fields with the data of the selected row for editing
+  const handleEdit = (id) => {
+    const index = tableData.findIndex((template) => template._id === id);
     setTitle(tableData[index].title);
     setMessage(tableData[index].message);
-    setEditIndex(index); // Set edit mode
+    setEditIndex(index);
     setIsModalOpen(true);
   };
 
-  const handleDelete = (index) => {
-    // Remove the selected row from the tableData array
-    const updatedData = [...tableData];
-    updatedData.splice(index, 1);
-    setTableData(updatedData);
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`/sms-templates/${id}`);
+      const updatedData = tableData.filter((template) => template._id !== id);
+      setTableData(updatedData);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  useEffect(() => {
+    // Fetch data from backend when the component mounts
+    axios.get('http://localhost:5001/sms-template')
+      .then(response => {
+        console.log(response.data); // Log the data received from the backend
+        setTableData(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching users:', error);
+      });
+  }, []);
+
+  const currentTableData = tableData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
     <>
@@ -93,7 +123,7 @@ function YourComponent() {
         <div className="container-555">
           <div className='patientdocument-head-555'>
             <div className='patient-icon-555'>
-              <Link to="/Administator">
+              <Link to="/Administrator">
                 <AiOutlineArrowLeft />
               </Link>
             </div>
@@ -123,9 +153,9 @@ function YourComponent() {
                   <td className='tds'>{data.title}</td>
                   <td className='tds'>{data.message}</td>
                   <td className='tds'>
-                    <button className='smsbtn' onClick={() => handleEdit(index)}>Edit</button>
-                &nbsp;
-                    <button className='smsbtn' onClick={() => handleDelete(index)}>Delete</button>
+                    <button className='smsbtn' onClick={() => handleEdit(data._id)}>Edit</button>
+                    &nbsp;
+                    <button className='smsbtn' onClick={() => handleDelete(data._id)}>Delete</button>
                   </td>
                 </tr>
               ))}
@@ -152,7 +182,6 @@ function YourComponent() {
         </div>
       </div>
 
-      {/* Modal */}
       {isModalOpen && (
         <div className="modal-555">
           <div className="modal-content-555">
@@ -168,7 +197,7 @@ function YourComponent() {
                 id="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-              />
+              />  
             </div>
             <div className="modal-input-555">
               <label className='modal-label-555' htmlFor="message">Message:</label>

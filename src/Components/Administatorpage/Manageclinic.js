@@ -1,26 +1,41 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Manageclinic.css';
-import {AiFillSetting} from "react-icons/ai";
-import axios from 'axios';
-import Popup from 'reactjs-popup';
 import { AiOutlineArrowLeft, AiOutlineStepForward, AiOutlineStepBackward } from "react-icons/ai";
 import { BrowserRouter as Router, Routes, Route, Link, useParams } from 'react-router-dom';
+import axios from 'axios';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
 
 function ManageClinicChair() {
-  const [showPopup, setShowPopup] = useState(false);  
-  
+  const [clinicChairs, setClinicChairs] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+  const [chairName, setChairName] = useState('');
+  const [description, setDescription] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [editIndex, setEditIndex] = useState(null);
+
+  const itemsPerPage = 5;
+
   useEffect(() => {
-    // Fetch bank account data from the server
-    axios.get('http://localhost:5004/Addbank') // Use the same endpoint defined in the server
-      .then((response) => {
-        setClinicChairs(response.data);
-      })
-      .catch((error) => {
-        console.error('Failed to fetch bank accounts:', error);
-      });
+    fetchClinicChairs();
   }, []);
+
+  const fetchClinicChairs = async () => {
+    try {
+      const response = await axios.get('/clinic-chair');
+      setClinicChairs(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handlePageChange = (pageNumber) => {
+    window.scrollTo(0, 0);
+    setCurrentPage(pageNumber);
+  };
+
+  const isFirstPage = currentPage === 1;
+  const isLastPage = clinicChairs.length <= currentPage * itemsPerPage;
 
   const openPopup = () => {
     setShowPopup(true);
@@ -28,28 +43,63 @@ function ManageClinicChair() {
 
   const closePopup = () => {
     setShowPopup(false);
+    setEditIndex(null);
+    setChairName('');
+    setDescription('');
   };
 
-  // Dummy data for clinic chairs
-  const [clinicChairs, setClinicChairs] = useState([
-   
-  ]);
+  const handleSave = async () => {
+    if (chairName && description) {
+      if (editIndex !== null) {
+        try {
+          await axios.put(`/clinic-chair/${clinicChairs[editIndex]._id}`, { chairName, description });
+          const updatedData = [...clinicChairs];
+          updatedData[editIndex] = { ...updatedData[editIndex], chairName, description };
+          setClinicChairs(updatedData);
+        } catch (error) {
+          console.error(error);
+        }
+        setEditIndex(null);
+      } else {
+        const newChair = {
+          chairName: chairName,
+          description: description,
+        };
 
-  // Pagination logic
-  const itemsPerPage = 5;
-  const [currentPage, setCurrentPage] = useState(1);
+        axios.post('http://localhost:5001/clinic-chair', newChair)
+          .then(response => {
+            console.log('Chair saved successfully');
+          })
+          .catch(error => {
+            console.error('Failed to save Chair:', error);
+          });
+
+        closePopup();
+      }
+    }
+  };
+
+  const handleEdit = (id) => {
+    const index = clinicChairs.findIndex((chair) => chair._id === id);
+    setChairName(clinicChairs[index].chairName);
+    setDescription(clinicChairs[index].description);
+    setEditIndex(index);
+    setShowPopup(true);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`/clinic-chairs/${id}`);
+      const updatedData = clinicChairs.filter((chair) => chair._id !== id);
+      setClinicChairs(updatedData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentClinicChairs = clinicChairs.slice(indexOfFirstItem, indexOfLastItem);
-
-  const isFirstPage = currentPage === 1;
-  const isLastPage = indexOfLastItem >= clinicChairs.length;
-
-  const handlePageChange = (pageNumber) => {
-    window.scrollTo(0, 0);
-    setCurrentPage(pageNumber);
-  };
 
   return (
     <>
@@ -95,30 +145,9 @@ function ManageClinicChair() {
                     <td>{chair.chairName}</td>
                     <td>{chair.description}</td>
                     <td>
-                  
-                    <Popup trigger=
-                    {<div className='manage-text-4'><AiFillSetting /></div>}
-                                    position ='bottom center'>
-                <div className='manage-popup-box'>
-                    <Popup trigger=
-                    {<div className='manage-delete'>Delete</div>}
-                    modal nested>
-                        <div className='manage-delete-confirm'>
-                            <div className='confirm-1'><div className='confirm'>Confirm</div></div>
-                            <div className='delete-user'>Are you sure you want to delete user</div>
-                            <div className='yes-no'>
-                                <button className='delete-yes'>YES</button>
-                                <button className='delete-no'>NO</button>
-                            </div>
-                        </div>
-                       
-                    </Popup>
-                    
-                    </div>
-                    </Popup>
-              
-                    
-                    
+                      <button className='smsbtn' onClick={() => handleEdit(chair._id)}>Edit</button>
+                      &nbsp;
+                      <button className='smsbtn' onClick={() => handleDelete(chair._id)}>Delete</button>
                     </td>
                   </tr>
                 ))}
@@ -129,17 +158,31 @@ function ManageClinicChair() {
               <div className="Manage-popup">
                 <div className="Manage-popup-content">
                   <button className="Manage-close-button" onClick={closePopup}>X</button>
-                  <h3>Add Chairs</h3>
+                  <h3>{editIndex !== null ? 'Edit Chair' : 'Add Chair'}</h3>
                   <hr></hr>
                   <form className='vamanage11'>
                     <div className='Manage-data123'>
                       <label className='manage1va' htmlFor="chairName">Chair name:</label>
-                      <input className='manage1vaa1' type="text" id="chairName" name="chairName" />
+                      <input
+                        className='manage1vaa1'
+                        type="text"
+                        id="chairName"
+                        value={chairName}
+                        onChange={(e) => setChairName(e.target.value)}
+                      />
 
                       <label className='manage1va' htmlFor="description">Description:</label>
-                      <input className='manage1vaa1' type="text" id="description" name="description" />
+                      <input
+                        className='manage1vaa1'
+                        type="text"
+                        id="description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                      />
                     </div>
-                    <button className='but-va-11' type="submit">Save</button>
+                    <button className='but-va-11' onClick={handleSave} type="button">
+                      Save
+                    </button>
                   </form>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // Import useState from 'react'
+import React, { useState,useEffect } from 'react'; // Import useState from 'react'
 import './Analysis.css';
 import { AiOutlineArrowLeft, AiOutlineStepBackward, AiOutlineStepForward } from "react-icons/ai";
 import { CgProfile } from 'react-icons/cg';
@@ -8,78 +8,40 @@ import { FiFilter } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
+import axios from 'axios';
 
 const Analysis = () => {
   // Sample patient data
-  const patientData = [
-    {
-      id: 1,
-      patientCode: 23390,
-      patientName: 'Ram',
-      gender: 'Male',
-      mobileNumber: '9876543214',
-      emailAddress: 'ram7777@gmail.com',
-      age: 34,
-      registrationDate: '11/09/2023',
-    },
-    {
-      id: 2,
-      patientCode: 23876,
-      patientName: 'Krish',
-      gender: 'Male',
-      mobileNumber: '9123409876',
-      emailAddress: 'krish123@gmail.com',
-      age: 26,
-      registrationDate: '11/09/2023',
-    },
-    {
-      id: 3,
-      patientCode: 34215,
-      patientName: 'Alice',
-      gender: 'Female',
-      mobileNumber: '1234567890',
-      emailAddress: 'alice@example.com',
-      age: 29,
-      registrationDate: '11/09/2023',
-    },
-    {
-      id: 4,
-      patientCode: 45872,
-      patientName: 'John',
-      gender: 'Male',
-      mobileNumber: '9876123450',
-      emailAddress: 'john@example.com',
-      age: 41,
-      registrationDate: '11/09/2023',
-    },
-    {
-      id: 5,
-      patientCode: 55433,
-      patientName: 'Emily',
-      gender: 'Female',
-      mobileNumber: '7890123456',
-      emailAddress: 'emily@example.com',
-      age: 35,
-      registrationDate: '11/09/2023',
-    },
-  ];
+  const [reports, setReports] = useState([
+   
+  ]);
   const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const current = patientData.slice(indexOfFirstItem, indexOfLastItem);
+  const current = reports.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
   const isFirstPage = currentPage === 1;
-  const isLastPage = indexOfLastItem >= patientData.length;
+  const isLastPage = indexOfLastItem >= reports.length;
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+  useEffect(() => {
+    // Fetch bank account data from the server
+    axios.get('http://localhost:5001/Report', 'newreports') // Use the same endpoint defined in the server
+      .then((response) => {
+        setReports(response.data);
+      })
+      .catch((error) => {
+        console.error('Failed to fetch bank accounts:', error);
+      });
+  }, []);
 
   return (
     <>
@@ -121,8 +83,10 @@ const Analysis = () => {
                 </tr>
               </thead>
               <tbody className="analysis-tbody">
-                {current.map((patient) => (
-                  <tr className="analysis-tablerow" key={patient.id}>
+              
+              
+              {current.map((patient, index) => (
+            <tr key={index} >
                     <td className="analysis-tabletd">{patient.patientCode}</td>
                     <td className="analysis-tabletd">{patient.patientName}</td>
                     <td className="analysis-tabletd">{patient.gender}</td>
@@ -131,7 +95,7 @@ const Analysis = () => {
                     <td className="analysis-tabletd">{patient.age}</td>
                     <td className="analysis-tabletd">{patient.registrationDate}</td>
                   </tr>
-                ))}
+                ))} 
               </tbody>
             </table>
           </div>

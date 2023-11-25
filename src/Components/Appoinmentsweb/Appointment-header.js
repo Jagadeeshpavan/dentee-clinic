@@ -2,6 +2,8 @@ import { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import ReactWhatsapp from 'react-whatsapp';
+
 
 // import ToggleButton from 'react-toggle-button'
 import "./Appointment-header.css"
@@ -202,7 +204,10 @@ const Appointment_header = () => {
 
 
                 <Popup trigger=
-                {<button className='ntr-wtsapp'><BiLogoWhatsapp className='ntr-wtsapp-icon'/>Whatsapp</button>} 
+                {<button className='ntr-wtsapp'>
+
+<ReactWhatsapp number="+91" class="btn btn-outline-primary" message="">Whatsapp</ReactWhatsapp>
+                  <BiLogoWhatsapp className='ntr-wtsapp-icon'/>Whatsapp</button>} 
                 modal nested>
                 {   
                     close => (

@@ -1,21 +1,27 @@
 import './Addbills.css';
+import React, { useState } from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { BiSearch } from 'react-icons/bi';
 import { GiNotebook } from 'react-icons/gi';
 import { BsFillPencilFill } from 'react-icons/bs';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
 import Popup from 'reactjs-popup';
-import { useState } from 'react';
+import Axios from 'axios';
 
 const Newbill = () => {
   const [popup, setPop] = useState(false);
+  const [selectedDate, setSelectedDate] = useState('');
+  const [date, setDate] = useState('');
+  const [selectedValue, setSelectedValue] = useState('');
   const [billData, setBillData] = useState({
-    tooth: 0,
-    cost: 0,
-    discount: 0,
-    note: '',
+    date: '',
+      selectedValue: '',
+    treatmentType: '',
+  cost: '',
+  discount: '',
+  
   });
 
   const handleClickopen = () => {
@@ -31,58 +37,64 @@ const Newbill = () => {
     setBillData({ ...billData, [field]: value });
   };
 
+  const handleSave = async () => {
+    try {
+      // Send a POST request to your backend API to add a new bill
+      const response = await Axios.post('http://localhost:5000/bill', billData);
+
+      // Handle the response as needed (e.g., show a success message)
+      console.log(response.data);
+    } catch (error) {
+      // Handle the error (e.g., show an error message)
+      console.error(error);
+    }
+  };
+  const handleDateChange = (event) => {
+    setDate(event.target.value);
+  };
+
+ 
+  const handleSelectChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
   return (
     <>
       <Navbar />
       <Sidebar />
       <div>
         <div className="new-bill-body">
-          {/* <div className="new-bill-head">
-            <div className="new-bill-icon">
-              <Link to="/HomePage">
-                <AiOutlineArrowLeft />
-              </Link>
-            </div>
-            <div className="new-bill-acc-1">Accounts / Add New Bill</div>
-          </div> */}
+      
 <div className='main-headnew3'>
         <div className='mainhead-iconnew3'><Link to='/HomePage'><AiOutlineArrowLeft/></Link></div>
         <div className='main-headingnew3'>Accounts / Add New Bill</div>
        </div>
+             
 
-          <div className="new-bill-content">
-            <div className="new-bill-top-contents">
-              <input className="new-bill-date" type="date" />
-
-              {/* <button className="new-bill-button">
-                <BiSearch />
-                <select className="search-dropdown">
-                  <option></option>
-                  <option>All</option>
-                  <option>Mobile No</option>
-                  <option>Case No</option>
-                  <option>Name</option>
-                </select>
-              </button> */}
- {/* <input
-                className="new-bill-ser"
-                type="text"
-                placeholder="Search"
-              /> */}
-
-
-<div className='search-containernew3'>
+    <div className="new-bill-content">
+        <input
+          className="new-bill-date"
+          type="date"
+          value={billData.date}
+          field='date'
+          // onChange={handleDateChange}
+           onChange={(e) => handleInputChange(e, 'date')}
+        />
+        <div className='search-containernew3'>
     <input className='search-barnew3' type='text' placeholder='Search'/>
     <button className='search-btnnew3'><BiSearch/></button>
     </div>
-             
-
-              <select className="newbill-select">
-                <option>Matrical</option>
-                <option>Matrical</option>
-                <option>Matrical</option>
-              </select>
-            </div>
+        <select
+          className="newbill-select"
+          value={selectedValue}
+          onChange={handleSelectChange}
+          field='selectedValue'
+          // onChange={(e) => handleInputChange(e, 'selectedValue')}
+        >
+          <option value="Matrical 1">Matrical 1</option>
+          <option value="Matrical 2">Matrical 2</option>
+          <option value="Matrical 3">Matrical 3</option>
+        </select>
+    </div>
 
             <table className="add-bill-table">
               <thead className="threadaddbills123">
@@ -437,10 +449,11 @@ const Newbill = () => {
             </div>
           </Popup>
           <p className="new-total">Total Cost</p>
-          <button className="new-bill-btm-btn">Save</button>
+          <button className="new-bill-btm-btn" onClick={handleSave}>
+            Save
+          </button>
           <button className="new-bill-btm-btn">Cancel</button>
         </div>
-      </div>
     </>
   );
 };

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { AiOutlineArrowLeft, AiOutlineStepBackward, AiOutlineStepForward } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
@@ -5,7 +6,6 @@ import './Useractivitylog.css';
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
-import axios from 'axios';
 
 function Dropdown() {
   const [selectedOption, setSelectedOption] = useState('');
@@ -14,60 +14,53 @@ function Dropdown() {
   const [additionalDropdown, setAdditionalDropdown] = useState('');
   const [searchText, setSearchText] = useState('');
   const [tableData, setTableData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
 
   useEffect(() => {
-    fetchData();
-  }, [selectedOption, startDate, endDate, additionalDropdown, searchText, currentPage]);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get('http://localhost:5002/useractivitylogs', {
-        params: {
-          selectedOption,
-          startDate,
-          endDate,
-          additionalDropdown,
-          searchText,
-          currentPage,
-          itemsPerPage,
-        },
-      });
-      setTableData(response.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
+    fetch('http://localhost:5001/Yourdata')
+      .then(response => response.json())
+      .then(result => setTableData(result))
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
 
   const filterData = (data) => {
     return data.filter((item) => {
       return (
-        item.name.toLowerCase().includes(searchText.toLowerCase()) ||
-        item.createdOn.toLowerCase().includes(searchText.toLowerCase()) ||
-        item.usernamePatientName.toLowerCase().includes(searchText.toLowerCase()) ||
-        item.eventTypeName.toLowerCase().includes(searchText.toLowerCase()) ||
-        item.eventDetails.toLowerCase().includes(searchText.toLowerCase())
+        (item.name && item.name.toLowerCase().includes(searchText.toLowerCase())) ||
+        (item.createdOn && item.createdOn.toLowerCase().includes(searchText.toLowerCase())) ||
+        (item.usernamePatientName && item.usernamePatientName.toLowerCase().includes(searchText.toLowerCase())) ||
+        (item.eventTypeName && item.eventTypeName.toLowerCase().includes(searchText.toLowerCase())) ||
+        (item.eventDetails && item.eventDetails.toLowerCase().includes(searchText.toLowerCase()))
       );
     });
   };
+  
 
+  // Pagination variables
+  const itemsPerPage = 5;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Calculate the index of the first and last items to display
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const filteredTableData = filterData(tableData);
+  const currentTableData = filteredTableData.slice(indexOfFirstItem, indexOfLastItem);
 
   const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
+    // Your existing code
   };
 
   const handleAdditionalDropdownChange = (event) => {
-    setAdditionalDropdown(event.target.value);
+    // Your existing code
   };
 
+  // Handle page change
   const handlePageChange = (pageNumber) => {
+    window.scrollTo(0, 0);
     setCurrentPage(pageNumber);
   };
 
   const isFirstPage = currentPage === 1;
-  const isLastPage = (currentPage * itemsPerPage) >= filteredTableData.length;
+  const isLastPage = indexOfLastItem >= filteredTableData.length;
 
   return (
     <>
@@ -84,6 +77,90 @@ function Dropdown() {
         </div>
         <br></br>
         <div className='mainbox-777'>
+          
+          <select className="select-77" value={additionalDropdown} onChange={handleAdditionalDropdownChange}>
+            <option value="Pavan">Pavan</option>
+            <option value="Gopi">Gopi</option>
+            <option value="Jaggu">Jaggu</option>
+          </select>
+
+          <select className="select-7" value={selectedOption} onChange={handleOptionChange}>
+            <option value="">Select an option</option>
+            <option value="Today">Today</option>
+            <option value="ThisWeek">This Week</option>
+            <option value="ThisMonth">This Month</option>
+            <option value="Year">Year</option>
+            <option value="Between">Between</option>
+          </select>
+
+          {selectedOption === 'ThisWeek' && 
+            <div className="custom-fields-777">
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                placeholder="Start Date"
+              />
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                placeholder="End Date"
+              />
+            </div>
+          }
+
+          {selectedOption === 'ThisMonth' && 
+            <div className="custom-fields-777">
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                placeholder="Start Date"
+              />
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                placeholder="End Date"
+              />
+            </div>
+          }
+
+          {selectedOption === 'Year' && 
+            <div className="custom-fields-777">
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                placeholder="Start Date"
+              />
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                placeholder="End Date"
+              />
+            </div>
+          }
+
+          {selectedOption === 'Between' && 
+            <div className="custom-fields-777">
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                placeholder="Start Date"
+              />
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                placeholder="End Date"
+              />
+            </div>
+          }
+
           <div className='search-container-777'>
             <input className='search-bar-777' type='text' placeholder='Search' value={searchText} onChange={(e) => setSearchText(e.target.value)} />
             <button className='search-btn-777'><BiSearch /></button>
@@ -102,7 +179,7 @@ function Dropdown() {
                 </tr>
               </thead>
               <tbody>
-                {filteredTableData.map((item, index) => (
+                {currentTableData.map((item, index) => (
                   <tr key={index}>
                     <td className="td-777">{item.name}</td>
                     <td className="td-777">{item.createdOn}</td>

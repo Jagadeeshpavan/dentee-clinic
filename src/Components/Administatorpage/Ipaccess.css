@@ -1,4 +1,4 @@
-.maincontipog37{
+maincontipog37{
   margin-left: 10.1%;
   padding-top: 2.5%;
   width: 90%;
@@ -6,12 +6,12 @@
 .pat-ip{
   display: flex; 
   align-items: center;
-  padding-left: 10px; 
+  margin-left: 8.5%; 
 
 }
 .pat-bot-ip{
   color: black;
-    margin: 9px 10px;
+    margin: 9% 10%;
     font-size: 13px;
 }
 .but-ip{
@@ -24,36 +24,38 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 40px;
-  height: 50px;
-  width: 100%;
+  margin-left: 9.5%;
+  margin-top: 5.9%;
+  height: 8vh;
+  width: 90%;
   background-color:rgb(219, 228, 231);
 }
 .mainhead-iconipog37{
-  margin-top: 5px;
-  margin-left: 50px;
+  margin-top: 1%;
+  margin-left: 1%;
 }
 .main-headingipog37{
   font-size: 15px;
-  margin-left: 20px;
+  margin-left: 1%;
   font-weight: bold;
 }
 .search-bar377{
-height: 35px;
-width: 350px;
-margin-left: 30px;
-margin-top: 15px;
+height: 5vh;
+width: 50vw;
+margin-left: 5%;
+margin-top: 5%;
 border-right: none;
 border: 1px solid grey;
 }
 .search-container377{
 display: flex;
+margin-left: 8%;
 width: 50%;
 }
 .search-btn377{
-height: 39px;
-width: 44px;
-margin-top: 14.5px;
+height: 5.5vh;
+width: 44vw;
+margin-top: 5%;
 border: none;
 background-color: red;
 /* border-radius: 8%; */
@@ -70,23 +72,23 @@ justify-content: center;
 
 .but-btn{
   background-color: #007bff;
-  height: 40px;
-  width: 150px;
+  height:6vh;
+  width: 12vw;
   color: white;
   /* background-color: transparent; */
   border: 1px solid #ccc;
   cursor: pointer;
-  margin-left: 2px;
-  margin-top: 9.6%;
+  margin-left: 250%;
+  margin-top: 16%;
 }
 
 .enable-disable-button-ipog37 {
-  padding: 8px 12px;
+  padding: 2% 4%;
   background-color: #007bff; 
   color: #fff; 
   border: none;
-  height: 40px;
-  border-radius: 1px;
+  height: 5vh;
+  border-radius: 1%;
   cursor: pointer;
   transition: background-color 0.2s;
   margin-left: 70%;
@@ -94,56 +96,55 @@ justify-content: center;
 }
 
 .enable-disable-button-ipog37.disabled {
-  background-color: #ccc; 
+  background-color: #007bff; 
+  height: 35px;
+  margin-top: 4%;
   cursor: not-allowed;
 }
 .trip{
   background-color: #007bff;
   color: white;
+  height: 35px;
 }
 
   .ipog37 {
-    padding: 10px 20px;
+    padding: 10% 20%;
     margin: 5px;
     cursor: pointer;
     background-color: #0056b3;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 5%;
   }
   
   .ipog37[type="text"] {
-    padding: 10px;
+    padding: 3%;
     margin: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
   }
 
   table.ip-table-ipog37 {
-    width: 100%;
+    width: 88%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 4%;
+    padding: 2%;
   }
 
   
-  .thip,
-  table.ip-table-ipog37  {
+  .ip-table-ipog37  {
     border: 1px solid #ddd;
-    padding: 8px;
+    margin-left: 11%;
     text-align: left;
+    width: 80%;
   }
   
   
-  .thip {
+  .thips {
     background-color: #007bff;
+    
   }
   
-  table.ip-table-ipog37 tr:hover {
+.ip-table-ipog37 tr:hover {
     background-color: #a7a4a4;
   }
-
-
-
-
-
-

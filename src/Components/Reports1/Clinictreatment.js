@@ -1,3 +1,4 @@
+
 import React from 'react'
 import './Clinictreatment.css'
 import { AiOutlineArrowLeft } from "react-icons/ai";
@@ -8,9 +9,28 @@ import { FaRegMoneyBillAlt}  from "react-icons/fa";
 import {Link} from "react-router-dom";
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
-
+import { useState, useEffect } from 'react';
 
 const Treatment = () => {
+
+    const [treatmentData, setTreatmentData] = useState({
+        // totalTreatmentTime: '-',
+        // treatmentsCompleted: 0,
+        // treatmentsCompletedOverall: 0,
+        // patientsInTreatment: 0,
+        // patientsWithCompletedTreatment: 0,
+        // patientsWithNoTreatmentEntry: 0,
+        // patientsWithOngoingTreatment: 0,
+      });
+    
+      useEffect(() => {
+        // Fetch treatment statistics data from the backend
+        fetch('http://localhost:5001/api/treatmentStatistics')
+          .then((response) => response.json())
+          .then((data) => setTreatmentData(data))
+          .catch((error) => console.error('Error fetching treatment statistics data:', error));
+      }, []);
+
   return (
     <>  
     <Navbar/>
@@ -61,16 +81,37 @@ const Treatment = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tc className='treatment-data'>
-                        <td className='treatment-one'>Total treatment time<div className='k9'>-</div></td><br/>
-                        <td className='treatment-two'>No of treatments completed<div className='k8'>0</div></td><br/>
-                        <td className='treatment-one'>No of treatments completed overall<div className='k8'>0</div></td><br/>
-                        <td className='treatment-two'>Patients in treatment <div className='k9'>0</div></td><br/>
-                        <td className='treatment-one'>Patients with completed treatment<div className='k8'>0</div></td><br/>
-                        <td className='treatment-two'>Patients with no treatment entry<div className='k8'>0</div></td><br/>
-                        <td className='treatment-one'>Patients with ongoing treatment<div className='k8'>0</div></td><br/>
-                    </tc>
-                </tbody>
+                <tr className='treatment-data'>
+                  <td className='treatment-one'>
+                    Total treatment time
+                    <div className='k9'>{treatmentData.totalTreatmentTime}</div>
+                  </td>
+                  <td className='treatment-two'>
+                    No of treatments completed
+                    <div className='k8'>{treatmentData.treatmentsCompleted}</div>
+                  </td>
+                  <td className='treatment-one'>
+                    No of treatments completed overall
+                    <div className='k8'>{treatmentData.treatmentsCompletedOverall}</div>
+                  </td>
+                  <td className='treatment-two'>
+                    Patients in treatment
+                    <div className='k9'>{treatmentData.patientsInTreatment}</div>
+                  </td>
+                  <td className='treatment-one'>
+                    Patients with completed treatment
+                    <div className='k8'>{treatmentData.patientsWithCompletedTreatment}</div>
+                  </td>
+                  <td className='treatment-two'>
+                    Patients with no treatment entry
+                    <div className='k8'>{treatmentData.patientsWithNoTreatmentEntry}</div>
+                  </td>
+                  <td className='treatment-one'>
+                    Patients with ongoing treatment
+                    <div className='k8'>{treatmentData.patientsWithOngoingTreatment}</div>
+                  </td>
+                </tr>
+              </tbody>
                 </table>
                 </div>
             </div>

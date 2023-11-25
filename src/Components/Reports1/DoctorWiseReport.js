@@ -1,72 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './DoctorWiseReport.css';
 import { Link } from 'react-router-dom';
 import { AiOutlineArrowLeft, AiOutlineStepBackward, AiOutlineCaretRight, AiOutlineStepForward, AiOutlineEllipsis } from 'react-icons/ai';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
+import axios from 'axios';
 
 function Doctorwise_Report_1() {
-  // Sample data, replace this with your actual data
-  const dataDoctor = [
-    {
-      treatmentDate: '2023-10-01',
-      doctorName: 'Dr. Smith',
-      patientName: 'John Doe',
-      treatment: 'Check-up',
-      treatmentTotalCost: '75.00',
-    },
-    {
-      treatmentDate: '2023-10-02',
-      doctorName: 'Dr. Johnson',
-      patientName: 'Jane Smith',
-      treatment: 'Dental Cleaning',
-      treatmentTotalCost: '120.00',
-    },
-    {
-      treatmentDate: '2023-10-03',
-      doctorName: 'Dr. Williams',
-      patientName: 'Alice Brown',
-      treatment: 'X-ray',
-      treatmentTotalCost: '150.00',
-    },
-    {
-      treatmentDate: '2023-10-04',
-      doctorName: 'Dr. Wilson',
-      patientName: 'Bob Johnson',
-      treatment: 'Check-up',
-      treatmentTotalCost: '75.00',
-    },
-    {
-      treatmentDate: '2023-10-05',
-      doctorName: 'Dr. Davis',
-      patientName: 'Ella Davis',
-      treatment: 'Blood Test',
-      treatmentTotalCost: '80.00',
-    },
-    {
-      treatmentDate: '2023-10-06',
-      doctorName: 'Dr. Miller',
-      patientName: 'David Wilson',
-      treatment: 'Dental Filling',
-      treatmentTotalCost: '200.00',
-    },
-    {
-      treatmentDate: '2023-10-07',
-      doctorName: 'Dr. Harris',
-      patientName: 'Olivia Clark',
-      treatment: 'Check-up',
-      treatmentTotalCost: '75.00',
-    },
-    {
-      treatmentDate: '2023-10-08',
-      doctorName: 'Dr. Taylor',
-      patientName: 'Sophia Evans',
-      treatment: 'Eye Exam',
-      treatmentTotalCost: '90.00',
-    },
-  ];
+  const [dataDoctor, setDataDoctor] = useState([]);
   const itemsPerPage = 2;
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:5001/doctorwise-report');
+      setDataDoctor(response.data);
+      console.log('Fetched Data:', response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -95,7 +52,6 @@ function Doctorwise_Report_1() {
                 </Link>
               </div>
               <div className="dwsmain-heading">Report / DoctorWise Report</div>
-             
             </div>
             <div className="dws-sel">
               <div className="dws-treatment">

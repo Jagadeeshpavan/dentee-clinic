@@ -29,9 +29,10 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 40px;
+  margin-top: 33px;
   height: 50px;
-  width: 100%;
+  width: 101%;
+  margin-left: -0.5%;
   background-color:rgb(219, 228, 231);
 }
 .mainhead-iconmanage{
@@ -183,7 +184,7 @@
 
 .manage1vaa1[type="text"],
 textarea {
-  width: 95%; 
+  width: 24%; 
   padding: 10px;
   margin-top: 5px;
   border: 1px solid #ccc;

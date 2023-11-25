@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect} from 'react';
 import { LuSettings } from 'react-icons/lu';
 import { AiOutlineArrowLeft,AiOutlineStepBackward, AiOutlineStepForward  } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
@@ -6,24 +6,19 @@ import { BrowserRouter as Router, Routes, Route, Link, useParams } from 'react-r
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
 import './Deviceaccess.css';
+import axios from 'axios';
 
 function Deviceaccess() {
+  const[device,setDevice] = useState('');
   const staticData = [
-    { username: 'User1', deviceid: '192.168.1.1', devicetype: 'Mobile', isallowed: 'Yes', action: '' },
-    { username: 'User2', deviceid: '192.168.1.2', devicetype: 'Desktop', isallowed: 'NO', action: '' },
-    { username: 'User3', deviceid: '192.168.1.3', devicetype: 'Desktop', isallowed: 'NO', action: '' },
-    { username: 'User4', deviceid: '192.168.1.4', devicetype: 'Desktop', isallowed: 'NO', action: '' },
-    { username: 'User5', deviceid: '192.168.1.5', devicetype: 'Desktop', isallowed: 'NO', action: '' },
-    { username: 'User6', deviceid: '192.168.1.6', devicetype: 'Desktop', isallowed: 'NO', action: '' },
-    { username: 'User7', deviceid: '192.168.1.7', devicetype: 'Desktop', isallowed: 'NO', action: '' },
-    // Add more rows as needed
+   
   ];
 
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentData = staticData.slice(indexOfFirstItem, indexOfLastItem);
+  const currentData = device.slice(indexOfFirstItem, indexOfLastItem);
 
   const [searchQuery, setSearchQuery] = useState('');
   const [isEnabled, setIsEnabled] = useState(true);
@@ -49,6 +44,17 @@ function Deviceaccess() {
     window.scrollTo(0, 0);
     setCurrentPage(pageNumber);
   };
+
+  useEffect(() => {
+    // Fetch bank account data from the server
+    axios.get('http://localhost:5001/device', 'newdevice') // Use the same endpoint defined in the server
+      .then((response) => {
+        setDevice(response.data);
+      })
+      .catch((error) => {
+        console.error('Failed to fetch bank accounts:', error);
+      });
+  }, []);
 
   return (
     <>
@@ -92,21 +98,29 @@ function Deviceaccess() {
               <th className="table-heading-gop11">Action</th>
             </tr>
           </thead>
-          <tbody>
-            {currentData.map((item, index) => (
-              <tr
-                key={index}
-                onClick={() => handleRowClick(index)}
-                className="table-row-gop11"
-              >
-                <td>{item.username}</td>
+
+           <tbody>
+          {Array.isArray(currentData) ? (
+           currentData.map((item, index) => (
+              <tr key={index} onClick={() => handleRowClick(index)}
+              className="table-row-gop11" >
+           
+           <td>{item.username}</td>
                 <td>{item.deviceid}</td>
                 <td>{item.devicetype}</td>
                 <td>{item.isallowed}</td>
                 <td>{item.action}<LuSettings /></td>
-              </tr>
-            ))}
-          </tbody>
+                 
+               
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td colSpan="5">Loading...</td>
+    </tr>
+  )}
+</tbody>
+         
         </table>
         <div className='pat-die'>
           <button

@@ -1,23 +1,17 @@
 import { AiOutlineArrowLeft, AiOutlineStepBackward, AiOutlineStepForward } from "react-icons/ai";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Dentalchart.css';
 import { BiArrowBack, BiSearch } from "react-icons/bi";
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
+import axios from 'axios';
 
 function DentalChart() {
   const [selectedToothInvestigation, setSelectedToothInvestigation] = useState('');
   const [editingRowIndex, setEditingRowIndex] = useState(null);
-  const [data, setData] = useState([
-    { title: 'Temp 1', id: 1 },
-    { title: 'Temp 2', id: 2 },
-    { title: 'Temp 3', id: 3 },
-    { title: 'Temp 4', id: 4 },
-    { title: 'Temp 5', id: 5 },
-    { title: 'Temp 6', id: 6 },
-
-  ]);
+  const [data, setData] = useState([]);
+  const [searchText, setSearchText] = useState('');  // Added state for searchText
 
   const toothInvestigations = [
     'Allergies',
@@ -73,6 +67,25 @@ function DentalChart() {
 
   const isFirstPage = currentPage === 1;
 
+  const filteredData = data.filter((item) => {
+    const titleMatch = item.title.toLowerCase().includes(searchText.toLowerCase());
+    const investigationMatch =
+      !selectedToothInvestigation || item.title === selectedToothInvestigation;
+    return titleMatch && investigationMatch;
+  });
+
+  const currentDataFiltered = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+
+  useEffect(() => {
+    axios.get('http://localhost:5001/Dentalchart')  // Removed 'newdata' parameter
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.error('Failed to fetch dental chart data:', error);
+      });
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -89,7 +102,13 @@ function DentalChart() {
 
         <div className='Dental-rowva12'>
           <div className='search-container12va'>
-            <input className='search-bar12va' type='text' placeholder='Search' />
+            <input
+              className='search-bar12va'
+              type='text'
+              placeholder='Search'
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
             <button className='search-btn12va'><BiSearch /></button>
           </div>
 
@@ -124,7 +143,7 @@ function DentalChart() {
             </tr>
           </thead>
           <tbody>
-            {currentData.map((item, index) => (
+            {currentDataFiltered.map((item, index) => (
               <tr key={item.id}>
                 <td>
                   {editingRowIndex === index ? (
@@ -144,7 +163,7 @@ function DentalChart() {
                     <>
                       <div className='headingbutton'>
                         <button onClick={() => handleEditClick(index)}>Edit</button>&nbsp;
-                        <button onClick={() => handleDeleteClick(index)}> Delete</button>
+                        <button onClick={() => handleDeleteClick(index)}>Delete</button>
                       </div>
                     </>
                   )}

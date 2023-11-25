@@ -11,28 +11,22 @@
     padding: 0;
     box-sizing: border-box;
 }
-
-
-
-
-
-
 .revenuemain-head{
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 40px;
+    margin-top: 7%;
     height: 50px;
     width: 100%;
     background-color:rgb(219, 228, 231);
 }
 .revenuemainhead-icon{
-    margin-top: 5px;
-    margin-left: 50px;
+    margin-top: 1%;
+    margin-left: 1%;
 }
 .revenuemain-heading{
-    font-size: 15px;
-    margin-left: 20px;
+    font-size: 90%;
+    margin-left: 1%;
     font-weight: bold;
 }
 .revenuehead {
@@ -45,7 +39,7 @@
     background-color: rgb(242, 241, 241);
     border-bottom: 1px solid rgb(181, 176, 176);
 }
-.revenue-icon {
+/* .revenue-icon {
     margin-top: 10px;
     margin-left: 50px;
     font-size: 20px;
@@ -56,19 +50,19 @@
     margin-left: 20px;
     font-weight: bold;
 
-}
-.more-options{
+} */
+/* .more-options{
     height: 30px;
     width: 30px;
     border: 1px solid black;
     margin-left: 67%;
-}
-.options-icon{
+} */
+/* .options-icon{
     padding: 6px 7px;
-}
+} */
 .revenue-contents {
     height: 50vh;
-    border-radius: 7px;
+    border-radius: 2%;
     background-color: rgb(247, 247, 247);
     box-shadow: 0, 0, 5px rgba(0, 0, 0, 0.2);
 }
@@ -76,18 +70,18 @@
     display: flex;
 }
 .revenue-day-dropdown1{
-    /* padding: 6px 40px; */
+   
+    /* margin: 15px 13px; */
     height: 40px;
-    width: 300px;
-    margin: 15px 13px;
+    width: 30%;
+    margin: 2% 3%;
     border-color: black;
     border-width: 2px;
 }
 .revenue-payment-dropdown1{
-    /* padding: 6px 40px; */
     height: 40px;
-    width: 300px;
-    margin: 15px 13px;
+    width: 30%;
+    margin: 2% 3%;
     border-color: black;
     border-width: 2px;
 }
@@ -97,24 +91,24 @@
     height: 30px;
     border: 1px solid rgb(209, 203, 203);
     border-collapse: collapse;
-    font-size: 14px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    font-size: 60%;
+    margin-top: 1%;
+    margin-bottom: 3%;
     border-bottom: 1px solid grey;
     
 }
 .revenue-table-header{
     padding: 7px;
-    font-size: 11px;
+    font-size: 123%;
     background-color: #007bff;
     color: white;
     height: 40px;
 }
 .revenue-table-data .td-ue{
-    font-size: 13px;
-    padding: 10px 10px;
+    font-size: 150%;
+    padding: 1% 1%;
 }
-.add-bill-bottom-sunil{
+/* .add-bill-bottom-sunil{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -141,8 +135,8 @@
 .revenue-bottom-icons{
     color: grey;
     margin: 10px 30px;
-}
-.revenue-bottom-num{
+} */
+/* .revenue-bottom-num{
     color: grey;
     margin: 9px 15px;
     font-size: 13px;
@@ -154,7 +148,7 @@
 .revenue-btm-items{
     font-size: 13px;
     margin: 8px 10px;
-}
+} */
 
 @media screen and (max-width: 768px) {
     .revenuehead {
@@ -169,9 +163,9 @@
         font-size: 16px; 
     }
 
-    .more-options {
+    /* .more-options {
         margin-left: auto; 
-    }
+    } */
 
     .revenue-day-dropdown,
     .revenue-payment-dropdown {
@@ -184,11 +178,11 @@
         margin: 5px 10px;
     }
 
-    .revenue-bottom-num,
+    /* .revenue-bottom-num,
     .revenue-btm-items {
-        margin: 5px 5px;
-    }
-    .revenuehead {
+        margin: 5% 5px;
+    } */
+    /* .revenuehead {
         margin-top: 10px;
         height: 50px;
         width: 84%;
@@ -205,31 +199,28 @@
         margin-left: 5px;
         font-weight: bold;
     
-    }
-    .more-options{
+    } */
+    /* .more-options{
         height: 30px;
         width: 30px;
         border: 1px solid black;
         margin-left: 55px;
-    }
-    .revenue-day-dropdown1{
-        /* padding: 6px 40px; */
+    } */
+    /* .revenue-day-dropdown1{
+    
         height: 40px;
         width: 150px;
-        /* margin: 15px 13px; */
         margin: 15px 0px 15px 36px;
         border-color: rgb(110, 183, 212);
         border-width: 2px;
-    }
-    .revenue-payment-dropdown1{
-        /* padding: 6px 40px; */
+    } */
+    /* .revenue-payment-dropdown1{
         height: 40px;
         width: 150px;
         margin: 15px 13px;
-        /* margin: 15px 0px 15px 20px; */
         border-color: rgb(110, 183, 212);
         border-width: 2px;
-    }
+    } */
 
 }
 
@@ -246,11 +237,11 @@
   
   .Ram{
     color: black;
-    margin: 9px 10px;
-    font-size: 13px;
+    margin: 0% 1%;
+    font-size: 100%;
   }
   .kumari{
     display: flex; 
     align-items: center;
-    padding-left: 10px; 
+    padding-left: 0%; 
   }

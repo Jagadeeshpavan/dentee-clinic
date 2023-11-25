@@ -51,9 +51,10 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 40px;
+  margin-top: 30px;
   height: 50px;
-  width: 100%;
+  margin-left: -0.5%;
+  width: 101%;
   background-color:rgb(219, 228, 231);
 }
 .mainhead-icon-ipog-89{
@@ -63,21 +64,9 @@
 .main-heading-ipog-89{
   font-size: 15px;
   margin-left: 20px;
+  width: 18%;
   font-weight: bold;
 }
-/* .Container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding-top: 20px;
-} */
-
-/* h1 {
-  margin-bottom: 20px;
-  font-size: 32px;
-} */
 
 .search-input-ipog-89 {
   display: flex;

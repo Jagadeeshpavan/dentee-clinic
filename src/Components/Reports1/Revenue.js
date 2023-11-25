@@ -1,104 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Revenue.css';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
 import { AiOutlineArrowLeft, AiOutlineStepBackward, AiOutlineCaretRight, AiOutlineStepForward } from 'react-icons/ai';
 import { SlOptions } from 'react-icons/sl';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+
+const itemsPerPage = 3;
 
 const Revenue = () => {
-  const dummyData = [
-    {
-      voucherType: 'Income',
-      voucherDate: '2023-09-12',
-      voucherNo: '013',
-      refNo: '001',
-      patientName: 'John',
-      costCenter: 'None',
-      debitLedger: 'None',
-      debitAmount: 'None',
-      creditLedger: 'None',
-      creditAmount: 'None',
-      narration: 'None',
-    },
-    {
-      voucherType: 'Expense',
-      voucherDate: '2023-09-14',
-      voucherNo: '014',
-      refNo: '002',
-      patientName: 'Johnny',
-      costCenter: 'None',
-      debitLedger: 'None',
-      debitAmount: 'None',
-      creditLedger: 'None',
-      creditAmount: 'None',
-      narration: 'None',
-    }, {
-      voucherType: 'Income',
-      voucherDate: '2023-09-15',
-      voucherNo: '015',
-      refNo: '003',
-      patientName: 'Alice',
-      costCenter: 'None',
-      debitLedger: 'None',
-      debitAmount: 'None',
-      creditLedger: 'None',
-      creditAmount: 'None',
-      narration: 'None',
-    },
-    {
-      voucherType: 'Income',
-      voucherDate: '2023-09-16',
-      voucherNo: '016',
-      refNo: '004',
-      patientName: 'Michael',
-      costCenter: 'None',
-      debitLedger: 'None',
-      debitAmount: 'None',
-      creditLedger: 'None',
-      creditAmount: 'None',
-      narration: 'None',
-    },
-    {
-      voucherType: 'Expense',
-      voucherDate: '2023-09-17',
-      voucherNo: '017',
-      refNo: '005',
-      patientName: 'Olivia',
-      costCenter: 'None',
-      debitLedger: 'None',
-      debitAmount: 'None',
-      creditLedger: 'None',
-      creditAmount: 'None',
-      narration: 'None',
-    },
-    {
-      voucherType: 'Income',
-      voucherDate: '2023-09-18',
-      voucherNo: '018',
-      refNo: '006',
-      patientName: 'William',
-      costCenter: 'None',
-      debitLedger: 'None',
-      debitAmount: 'None',
-      creditLedger: 'None',
-      creditAmount: 'None',
-      narration: 'None',
-    },
-  ];
-
-  const itemsPerPage = 3;
+  const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:5001/revenue-data');
+      setData(response.data);
+      console.log('Fetched Data:', response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentfan = dummyData.slice(indexOfFirstItem, indexOfLastItem);
+  const currentfan = data.slice(indexOfFirstItem, indexOfLastItem);
 
   const isFirstPage = currentPage === 1;
-  const isLastPage = indexOfLastItem >= dummyData.length;
+  const isLastPage = indexOfLastItem >= data.length;
 
   const handlePageChange = (pageNumber) => {
-    if (pageNumber >= 1 && pageNumber <= Math.ceil(dummyData.length / itemsPerPage)) {
+    if (pageNumber >= 1 && pageNumber <= Math.ceil(data.length / itemsPerPage)) {
       setCurrentPage(pageNumber);
     }
   };
@@ -117,7 +54,7 @@ const Revenue = () => {
             </div>
             <div className="revenuemain-heading">Report / Revenue Analysis</div>
             <div className="more-options">
-              <SlOptions className="options-icon" />
+              {/* <SlOptions className="options-icon" /> */}
             </div>
           </div>
           <div className="revenue-contents">

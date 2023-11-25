@@ -22,7 +22,8 @@
       align-items: center;
       margin-top: 40px;
       height: 10vh;
-      width: 100%;
+      width: 101.5%;
+      margin-left: -0.5%;
       background-color: rgb(234, 231, 231);
       border-bottom: 1px solid grey;
   }
@@ -70,8 +71,8 @@
       color: green;
       background-color: #fff;
       border: none;
-      margin-left: 570px;
-      margin-top: 40px;
+      margin-left: 370px;
+      margin-top: 20px;
      
   }
   .routine-se-1{

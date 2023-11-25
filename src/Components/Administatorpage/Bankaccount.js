@@ -1,70 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Bankaccount.css';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
 import { ImSearch } from 'react-icons/im';
-import { AiOutlineArrowLeft,AiOutlineStepBackward,AiOutlineStepForward } from "react-icons/ai";
+import { AiOutlineArrowLeft, AiOutlineStepBackward, AiOutlineStepForward } from "react-icons/ai";
 import { TfiSettings } from "react-icons/tfi";
 import { Link } from 'react-router-dom';
 import AddBankAccount from './AddBankAccount';
 
 function BankAccountManagement() {
   const [showForm, setShowForm] = useState(false);
-  const [bankAccounts, setBankAccounts] = useState([
-    {
-      bankName: 'Sample Bank 1',
-      accountNumber: '1234567890',
-      branch: 'Sample Branch A',
-      city: 'Sample City X',
-    },
-    {
-      bankName: 'Sample Bank 2',
-      accountNumber: '9876543210',
-      branch: 'Sample Branch B',
-      city: 'Sample City Y',
-    },
-    {
-      bankName: 'Sample Bank 3',
-      accountNumber: '1234567890',
-      branch: 'Sample Branch A',
-      city: 'Sample City X',
-    },
-    {
-      bankName: 'Sample Bank 4',
-      accountNumber: '9876543210',
-      branch: 'Sample Branch B',
-      city: 'Sample City Y',
-    },
-    {
-      bankName: 'Sample Bank 5',
-      accountNumber: '1234567890',
-      branch: 'Sample Branch A',
-      city: 'Sample City X',
-    },
-    {
-      bankName: 'Sample Bank 6',
-      accountNumber: '9876543210',
-      branch: 'Sample Branch B',
-      city: 'Sample City Y',
-    },
-
-
-
-    // Your initial bank account data
-
-  ]);
-
+  const [bankAccounts, setBankAccounts] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [openSettingsRow, setOpenSettingsRow] = useState(-1);
   const [editedRow, setEditedRow] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    // Fetch bank accounts from the backend when the component mounts
+    fetch('http://localhost:5001/Addbank')
+      .then((response) => response.json())
+      .then((data) => setBankAccounts(data))
+      .catch((error) => console.error('Error fetching bank accounts:', error));
+  }, []);
 
   const addBankAccount = (newBankAccount) => {
-    setBankAccounts([...bankAccounts, newBankAccount]);
-    setShowForm(false);
-  };
-
-  const toggleForm = () => {
-    setShowForm(!showForm);
+    fetch('http://localhost:5001/Addbank', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newBankAccount),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setBankAccounts([...bankAccounts, newBankAccount]);
+        setShowForm(false);
+      })
+      .catch((error) => console.error('Error adding bank account:', error));
   };
 
   const handleRowSelect = (index) => {
@@ -76,16 +49,35 @@ function BankAccountManagement() {
   };
 
   const handleDeleteRow = (index) => {
-    const updatedBankAccounts = bankAccounts.filter((_, i) => i !== index);
-    setBankAccounts(updatedBankAccounts);
-    setOpenSettingsRow(-1);
+    fetch(`http://localhost:5001/Addbank/${bankAccounts[index]._id}`, {
+      method: 'DELETE',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const updatedBankAccounts = bankAccounts.filter((_, i) => i !== index);
+        setBankAccounts(updatedBankAccounts);
+        setOpenSettingsRow(-1);
+      })
+      .catch((error) => console.error('Error deleting bank account:', error));
   };
 
   const deleteSelectedRows = () => {
-    const updatedBankAccounts = bankAccounts.filter((_, index) => !selectedRows.includes(index));
-    setBankAccounts(updatedBankAccounts);
-    setSelectedRows([]);
-    setOpenSettingsRow(-1);
+    const selectedIds = selectedRows.map((index) => bankAccounts[index]._id);
+    fetch('http://localhost:5001/Addbank', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ids: selectedIds }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const updatedBankAccounts = bankAccounts.filter((_, index) => !selectedRows.includes(index));
+        setBankAccounts(updatedBankAccounts);
+        setSelectedRows([]);
+        setOpenSettingsRow(-1);
+      })
+      .catch((error) => console.error('Error deleting selected bank accounts:', error));
   };
 
   const editRow = (index) => {
@@ -97,14 +89,10 @@ function BankAccountManagement() {
     setShowForm(false);
   };
 
-  // Pagination logic
   const itemsPerPage = 5;
-  const [currentPage, setCurrentPage] = useState(1);
-
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentBankAccounts = bankAccounts.slice(indexOfFirstItem, indexOfLastItem);
-
   const isFirstPage = currentPage === 1;
   const isLastPage = indexOfLastItem >= bankAccounts.length;
 
@@ -112,7 +100,7 @@ function BankAccountManagement() {
     window.scrollTo(0, 0);
     setCurrentPage(pageNumber);
   };
-
+  
   return (
     <>  
     <Navbar />

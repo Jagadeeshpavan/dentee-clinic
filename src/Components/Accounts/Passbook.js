@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Passbook.css';
 import { AiOutlineArrowLeft, AiOutlineStepBackward, AiOutlineStepForward } from "react-icons/ai";
 // import { AiOutlineArrowLeft } from "react-icons/ai";
@@ -6,33 +6,19 @@ import { BiSearch } from "react-icons/bi";
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 function Passbook() {
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const passbookData = [
-    {
-      date: '2023-10-19',
-      type: 'Bill',
-      details: 'Payment',
-      patientName: 'Yogesh',
-      bill: 24,
-      payment: '7,000',
-      balanceAmount: '7,000',
-    },
-    {
-      date: '2023-10-20',
-      type: 'Invoice',
-      details: 'Service',
-      patientName: 'John',
-      bill: 45,
-      payment: '5,000',
-      balanceAmount: '2,000',
-    },
-    // Add more data objects as needed
-  ];
-
+  const [passbookData, setPassbookData]=useState([]);
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/bills')
+      .then((response) => setPassbookData(response.data))
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
+  
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentPassbookData = passbookData.slice(indexOfFirstItem, indexOfLastItem);

@@ -1,105 +1,58 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { AiOutlineStepBackward, AiOutlineCaretRight, AiOutlineStepForward } from 'react-icons/ai';
-import './ReferReport.css';
 import { BiSearch } from "react-icons/bi";
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import './ReferReport.css';
 
 function ReferReport() {
-  const dummyData = [
-    {
-      select: 1,
-      registrationDate: '2023-09-10',
-      referrerName: 'Sample Bank',
-      referredBy: 'Main Branch',
-      mobileNumber: "John Doe's Account",
-      emailAddress: 'john@example.com',
-    },
-    {
-      select: 2,
-      registrationDate: '2023-09-11',
-      referrerName: 'ABC Clinic',
-      referredBy: 'Dr. Smith',
-      mobileNumber: "Jane's Account",
-      emailAddress: 'jane@example.com',
-    },
-    {
-      select: 3,
-      registrationDate: '2023-09-12',
-      referrerName: 'XYZ Hospital',
-      referredBy: 'Dr. Johnson',
-      mobileNumber: "Mary's Account",
-      emailAddress: 'mary@example.com',
-    },
-    {
-      select: 4,
-      registrationDate: '2023-09-13',
-      referrerName: 'Healthcare Center',
-      referredBy: 'Dr. Brown',
-      mobileNumber: "Robert's Account",
-      emailAddress: 'robert@example.com',
-    },
-    {
-      select: 5,
-      registrationDate: '2023-09-14',
-      referrerName: 'Sunshine Clinic',
-      referredBy: 'Dr. Wilson',
-      mobileNumber: "Sarah's Account",
-      emailAddress: 'sarah@example.com',
-    },
-    {
-      select: 6,
-      registrationDate: '2023-09-15',
-      referrerName: 'Wellness Hospital',
-      referredBy: 'Dr. Martin',
-      mobileNumber: "Chris' Account",
-      emailAddress: 'chris@example.com',
-    },
-    {
-      select: 7,
-      registrationDate: '2023-09-16',
-      referrerName: 'Medical Group',
-      referredBy: 'Dr. Davis',
-      mobileNumber: "Jennifer's Account",
-      emailAddress: 'jennifer@example.com',
-    },
-    {
-      select: 8,
-      registrationDate: '2023-09-17',
-      referrerName: 'City Clinic',
-      referredBy: 'Dr. Jackson',
-      mobileNumber: "Laura's Account",
-      emailAddress: 'laura@example.com',
-    },
-    {
-      select: 9,
-      registrationDate: '2023-09-18',
-      referrerName: 'Central Hospital',
-      referredBy: 'Dr. White',
-      mobileNumber: "David's Account",
-      emailAddress: 'david@example.com',
-    },
-    {
-      select: 10,
-      registrationDate: '2023-09-19',
-      referrerName: 'Wellness Clinic',
-      referredBy: 'Dr. Allen',
-      mobileNumber: "Patricia's Account",
-      emailAddress: 'patricia@example.com',
-    },
+  const itemsPerPage = 5;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [Data, setData] = useState([
+    // Select : "",
+    // RegistrationDate: "",
+    // ReferrerName: "",
+    // ReferredBy: "",
+    // MobileNumber: "",
+    // EmailAddress: "",
+  
+  ]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const searchFields = [
+   ' Select',
+  'RegistrationDate',
+  'ReferrerName',
+  'ReferredBy',
+  'MobileNumber',
+  'EmailAddress',
   ];
 
-  const itemsPerPage = 5; // Number of items to display per page
-  const [currentPage, setCurrentPage] = useState(1);
+
+
+  useEffect(() => {
+    // Correct placement of fetchData inside useEffect
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:5001/api/referrers');
+        const data = await response.json();
+        setData(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData(); // Call fetchData when the component mounts
+
+  }, [setData]); // Dependency array should be closed here
+  
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentData = dummyData.slice(indexOfFirstItem, indexOfLastItem);
-
-  const totalPages = Math.ceil(dummyData.length / itemsPerPage);
-
+  const currentData = Data.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(Data.length / itemsPerPage);
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === totalPages;
 
@@ -108,6 +61,19 @@ function ReferReport() {
       setCurrentPage(newPage);
     }
   };
+  const filterBySearchTerm = (payment) => {
+    const lowerCaseSearchTerm = searchTerm.toLowerCase();
+    return searchFields.some((field) =>
+      payment[field] && payment[field].toLowerCase().includes(lowerCaseSearchTerm)
+    );
+  };
+  
+  const filteredTrain = currentData.filter(filterBySearchTerm);
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
 
   return (
     <>
@@ -140,14 +106,20 @@ function ReferReport() {
           </select>
           &nbsp;&nbsp;&nbsp;&nbsp;
           <button className='button-refer'> View Report</button>
-        </div>
-        <div>
-          <br />
-          <br />
-          <div className='search-containerrefer'>
-            <input className='search-barrefer' type='text' placeholder='Search' />
-            <button className='search-btnrefer'><BiSearch /></button>
-          </div>
+       
+          {/* <div className='search-containerrefer'> */}
+          <input
+            className='search-barrefer'
+            type='text'
+            placeholder='Search'
+            value={searchTerm}
+            onChange={handleSearchChange}  
+          />
+          <button className='search-btnrefer' onClick={() => setSearchTerm('')}>
+            <BiSearch />
+          </button>
+        {/* </div> */}
+        
         </div>
         <br></br>
         <table className="table123">
@@ -162,14 +134,14 @@ function ReferReport() {
             </tr>
           </thead>
           <tbody className='body-main'>
-            {currentData.map((item, index) => (
+            {filteredTrain.map((item, index) => (
               <tr key={index} className='refer-table-data'>
-                <td className='td-ata'>{item.select}</td>
-                <td className='td-ata'>{item.registrationDate}</td>
-                <td className='td-ata'>{item.referrerName}</td>
-                <td className='td-ata'>{item.referredBy}</td>
-                <td className='td-ata'>{item.mobileNumber}</td>
-                <td className='td-ata'>{item.emailAddress}</td>
+                <td className='td-ata'>{item.Select}</td>
+                <td className='td-ata'>{item.RegistrationDate}</td>
+                <td className='td-ata'>{item.ReferrerName}</td>
+                <td className='td-ata'>{item.ReferredBy}</td>
+                <td className='td-ata'>{item.MobileNumber}</td>
+                <td className='td-ata'>{item.EmailAddress}</td>
               </tr>
             ))}
           </tbody>

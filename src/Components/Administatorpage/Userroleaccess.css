@@ -20,8 +20,10 @@
 }
 .Admin-icon1{
     height: 50px;
-    width: 99%;
-    background-color: rgb(241, 237, 237);    
+    width: 100.7%;
+    margin-top: 70px;
+    margin-left: -0.5%;
+    background-color: rgb(224, 228, 228);    
     border: 1px solid rgb(226, 217, 217);
     display: flex;
     flex-direction: row;
@@ -29,7 +31,7 @@
 .Admin-icon2{
         font-size: 20px;
         margin-top: 11px;
-        background-color: rgb(241, 237, 237);
+        background-color: rgb(224, 228, 228);
         color: rgb(9, 9, 9);
         border: none;
         margin-left: 0px;

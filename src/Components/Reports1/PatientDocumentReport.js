@@ -1,24 +1,31 @@
-import React, { useState } from 'react';
-import { AiOutlineArrowLeft, AiFillStepBackward, AiFillStepForward, IoCaretBackOutline, AiOutlineCaretRight, IoMdArrowDropdown } from 'react-icons/ai';
-import { BiSearch } from "react-icons/bi";
-import './PatientDocumentReport.css';
+import React, { useState, useEffect } from 'react';
+import { AiOutlineArrowLeft, AiFillStepBackward, AiFillStepForward } from 'react-icons/ai';
+import { BiSearch } from 'react-icons/bi';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
-import { Link } from 'react-router-dom';
+import './PatientDocumentReport.css';
+
+const itemsPerPage = 3;
 
 const PatientDocumentReport = () => {
-  const data = [
-    ["Patient Name", "Mobile Number", "File Name", "Description", "Virtual File Path", "Created On"],
-    ["John", "8889991234", "013", "Admitted", "Path", "12/09/2023"],
-    ["Alice", "7778889999", "002", "Test Report", "Report Path", "11/09/2023"],
-    ["Bob", "5556667777", "005", "Prescription", "Prescription Path", "10/09/2023"],
-    ["Jane", "1234567890", "009", "Medical History", "History Path", "09/09/2023"],
-    ["Ella", "9876543210", "007", "Lab Results", "Results Path", "08/09/2023"],
-    ["David", "1112223333", "012", "Scan Report", "Scan Path", "07/09/2023"],
-  ];
-
-  const itemsPerPage = 3;
+  const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:5001/patient-document-report');
+      setData(response.data);
+      console.log('Fetched Data:', response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -76,29 +83,39 @@ const PatientDocumentReport = () => {
           <table className='patient-table-sunil'>
             <thead className='head-ue'>
               <tr className='tr-ue'>
-                {data[0].map((header, index) => (
-                  <th key={index} className='patient-table-head'>{header}</th>
-                ))}
+                <th className='patient-table-head'>Patient Name</th>
+                <th className='patient-table-head'>Mobile Number</th>
+                <th className='patient-table-head'>File Name</th>
+                <th className='patient-table-head'>Description</th>
+                <th className='patient-table-head'>Virtual File Path</th>
+                <th className='patient-table-head'>Created On</th>
               </tr>
             </thead>
-            {currentData.map((row, rowIndex) => (
-              <tr key={rowIndex} className="patientsome">
-                {row.map((cell, cellIndex) => (
-                  <td key={cellIndex} className='ttd'>{cell}</td>
-                ))}
-              </tr>
-            ))}
+            <tbody>
+              {currentData.map((row, rowIndex) => (
+                <tr key={rowIndex} className="patientsome">
+                  <td className='ttd'>{row.patientName}</td>
+                  <td className='ttd'>{row.mobileNumber}</td>
+                  <td className='ttd'>{row.fileName}</td>
+                  <td className='ttd'>{row.description}</td>
+                  <td className='ttd'>{row.virtualFilePath}</td>
+                  <td className='ttd'>{row.createdOn}</td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
         <div className='raka'>
-          <button className='sati'
+          <button
+            className='sati'
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={isFirstPage}
           >
             <AiFillStepBackward />
           </button>
           <p className='bapu'>{currentPage}</p>
-          <button className='sati'
+          <button
+            className='sati'
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={isLastPage}
           >
@@ -107,7 +124,7 @@ const PatientDocumentReport = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
 export default PatientDocumentReport;

@@ -5,9 +5,49 @@ import {TfiSave} from 'react-icons/tfi';
 import {GrEdit} from 'react-icons/gr';
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import Navbar from '../Navbar';
+import axios from 'axios';
 import Sidebar from '../Sidebar';
 
 function CustomTable() {
+
+  const [personal, setPersonal] = useState({
+    receipt: '',
+    invoice: '',
+    currency:'',
+    dayview:'Select Dayview',
+    codeprefix:'',
+    senderId:'',
+    language:'Select Language',
+    numbering:'Select Numbering',
+    cancel:'Select Cancel',
+    confirmweb:'Select Confirm',
+    recordEdit:'Select RecordEdit',
+    consultationoff:'Select Consultationoff',
+    feedback:'',
+    sms:'',
+    email:'',    
+
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setPersonal({ ...personal, [name]: value });
+  };
+
+  const handleSave = () => {
+    axios
+      .post('http://127.0.0.1:5000/personal', personal)
+      .then((response) => {
+        console.log('Response from server:', response.data);
+        
+        // Handle any further actions, e.g., redirect or show a success message
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
+
+
   const [showPatientCodeModal, setShowPatientCodeModal] = useState(false);
   const [isAutoGenerating, setIsAutoGenerating] = useState(true);
 
@@ -29,10 +69,10 @@ function CustomTable() {
     <Sidebar/>
     <div className='maincont-25'>
 
-<div className='patientdocument-head-25'>
+        <div className='patientdocument-head-25'>
         <div className='patient-icon-25'>
         <Link to="/Administator">
-<AiOutlineArrowLeft/></Link></div>
+        <AiOutlineArrowLeft/></Link></div>
         <div className='patient-heading-25'>Administrator / Personalize Settings</div>
        </div>
 
@@ -45,47 +85,71 @@ function CustomTable() {
           <td>Receipt Prefix:</td>
           <td>
             <strong>Receipt Prefix:</strong>
-            <input type="text" name="receipt-prefix" />
+            <input 
+              type="text" 
+              name="receipt" 
+              value={personal.receipt}
+              onChange={handleInputChange}
+            />
           </td>
-          <td> <TfiSave className='icon-size-25' /></td>
+          <td> <TfiSave className='icon-size-25' onClick={handleSave} /></td>
         </tr>
         <br></br>
         <tr>
           <td>Invoice Prefix:</td>
           <td>
             <strong>Invoice Prefix:</strong>
-            
-            <input type="text" name="invoice-prefix" />
+            <input 
+              type="text" 
+              name="invoice"
+              value={personal.invoice}
+              onChange={handleInputChange}
+            />
           </td>
-          <td><TfiSave className='icon-size-25' /></td>
+          <td><TfiSave className='icon-size-25' onClick={handleSave} /></td>
         </tr>
         <br></br>
         <tr>
           <td>Currency Symbol:</td>
           <td>
             <strong>Currency Symbol:</strong>
-            <input type="text" name="currency-symbol" />
+            <input 
+              type="text" 
+              name="currency"
+              value={personal.currency}
+              onChange={handleInputChange}
+            />
           </td>
-          <td><TfiSave className='icon-size-25' /></td>
+          <td><TfiSave className='icon-size-25' onClick={handleSave} /></td>
         </tr>
         <br></br>
         <tr>
           <td>Appointment Default View:</td>
           <td className="dropdown-cell-25">
             <strong>Day View:</strong>
-            <select name="day-view">
-              <option value="week">Week View</option>
-              <option value="month">Month View</option>
-            </select>
+            <select 
+                name="dayview"
+                value={personal.dayview}
+                onChange={handleInputChange}
+              >
+                <option value="week">Week View</option>
+                <option value="month">Month View</option>
+              </select>
+
           </td>
-          <td><TfiSave className='icon-size-25' /></td>
+          <td><TfiSave className='icon-size-25' onClick={handleSave} /></td>
         </tr>
         <br></br>
         <tr>
           <td>Patient Code Prefix:</td>
           <td>
             <strong>Patient Code Prefix:</strong>
-            <input type="text" name="patient-code-prefix" />
+            <input 
+              type="text" 
+              name="codeprefix"
+              value={personal.codeprefix}
+              onChange={handleInputChange}
+            />
             <GrEdit onClick={togglePatientCodeModal} />
           </td>
           <td></td>
@@ -94,7 +158,6 @@ function CustomTable() {
        
    
     {showPatientCodeModal && (
-
 
       <div className="overlay-25">
 
@@ -148,48 +211,65 @@ function CustomTable() {
           <td>Sms SenderId:</td>
           <td>
             <strong>Sms SenderId:</strong>
-            <input type="text" name="Sms SenderId:" />
+            <input 
+              type="text" 
+              name="senderId"
+              value={personal.senderId}
+              onChange={handleInputChange}
+            />
           </td>
-          <td></td>
+          <td><TfiSave className='icon-size-25' onClick={handleSave} /></td>
         </tr>
         <br></br>
         <tr>
           <td>Print Language:</td>
           <td>
             <strong>Language:</strong>
-            <select name="select manually">
+            <select 
+              name="language"
+              value={personal.language}
+              onChange={handleInputChange}
+            >
               <option value="english">english</option>
               <option value="hindi">hindi</option>
             </select>
             
           </td>
-          <td><TfiSave className='icon-size-25' /></td>
+          <td><TfiSave className='icon-size-25' onClick={handleSave} /></td>
         </tr>
         <br></br>
       <tr>
           <td>Tooth Numbering Mode:</td>
           <td>
             <strong>Tooth Numbering:</strong>
-            <select name="day-view">
+            <select 
+              name="numbering"
+              value={personal.numbering}
+              onChange={handleInputChange}
+            >
               <option value="indian">indian</option>
               <option value="universal">universal</option>
             </select>
             
           </td>
-          <td><TfiSave className='icon-size-25' /></td>
+          <td><TfiSave className='icon-size-25' onClick={handleSave} /></td>
         </tr>
         <br></br>
         <tr>
           <td>Show Cancelled Appointment :</td>
           <td>
             <strong>Show Cancelled Appointment :</strong>
-            <select name="day-view">
+            <select 
+              name="cancel"
+              value={personal.cancel}
+              onChange={handleInputChange}
+            >
               <option value="true">true</option>
               <option value="false">false</option>
             </select>
             
           </td>
-          <td><TfiSave className='icon-size-25' /></td>
+          <td><TfiSave className='icon-size-25' onClick={handleSave} /></td>
         </tr>
         <br></br>
         <br></br>
@@ -197,74 +277,99 @@ function CustomTable() {
           <td>Direct Confirm Web Appointment :</td>
           <td>
             <strong>Direct Confirm Web Appointment :</strong>
-            <select name="day-view">
+            <select 
+              name="confirmweb"
+              value={personal.confirmweb}
+              onChange={handleInputChange}
+            >
               <option value="true">true</option>
               <option value="false">false</option>
             </select>
             
           </td>
-          <td><TfiSave className='icon-size-25' /></td>
+          <td><TfiSave className='icon-size-25' onClick={handleSave} /></td>
         </tr>
         <br></br>
         <tr>
           <td>Keep Record Editable (only for same day) :</td>
           <td>
             <strong>Keep Record Editable (only for same day) :</strong>
-            <select name="day-view">
+            <select 
+              name="recordEdit"
+              value={personal.recordEdit}
+              onChange={handleInputChange}
+            >
               <option value="true">true</option>
               <option value="false">false</option>
             </select>
             
           </td>
-          <td><TfiSave className='icon-size-25' /></td>
+          <td><TfiSave className='icon-size-25' onClick={handleSave} /></td>
         </tr>
         <br></br>
         <tr>
           <td>Online consultation appointment setting on/off<br></br> during appointment :</td>
           <td>
             <strong>Online consultation appointment setting on/off during appointment :</strong>
-            <select name="day-view">
+            <select 
+              name="consultationoff"
+              value={personal.consultationoff}
+              onChange={handleInputChange}
+            >
               <option value="true">true</option>
               <option value="false">false</option>
             </select>
             
           </td>
-          <td><TfiSave className='icon-size-25' /></td>
+          <td><TfiSave className='icon-size-25' onClick={handleSave} /></td>
         </tr>
         <br></br>
         <tr>
           <td>Appointment feedback link :</td>
           <td>
             <strong>Custom appointment feedback link :</strong>
-            <input type="text" name="Custom appointment feedback link :" />
+            <input 
+              type="text" 
+              name="feedback"
+              value={personal.feedback}
+              onChange={handleInputChange}
+             />
           </td>
-          <td><TfiSave className='icon-size-25' /></td>
+          <td><TfiSave className='icon-size-25' onClick={handleSave} /></td>
         </tr>
         <br></br>
         <tr>
           <td>Clinic Level SMS On-Off Setting :</td>
           <td>
             <strong>Send SMS :</strong>
-            <select name="day-view">
+            <select 
+              name="sms"
+              value={personal.sms}
+              onChange={handleInputChange}
+            >
               <option value="on">on</option>
               <option value="off">off</option>
             </select>
             
           </td>
-          <td><TfiSave className='icon-size-25' /></td>
+          <td><TfiSave className='icon-size-25'onClick={handleSave}/></td>
         </tr>
         <br></br>
         <tr>
           <td>Clinic Level Email On-Off Setting :</td>
           <td>
             <strong>Send Email :</strong>
-            <select name="day-view">
+            <select 
+              name="email"
+              value={personal.email}
+              onChange={handleInputChange}
+            >
               <option value="on">on</option>
               <option value="off">off</option>
             </select>
             
           </td>
-          <td><TfiSave className='icon-size-25' /></td>
+          <td><TfiSave className='icon-size-25' onClick={handleSave} /></td>
         </tr>
         <br></br>
               </tbody>

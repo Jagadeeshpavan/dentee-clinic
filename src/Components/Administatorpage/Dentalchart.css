@@ -29,6 +29,7 @@ color: black;
   margin-top: 0px;
   border-right: none;
   border: 1px solid grey;
+  outline-width: 0px;
 }
 .search-container12va{
   display: flex;
@@ -55,24 +56,24 @@ color: black;
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 40px;
-  height: 50px;
+  margin-top: -1%;
+  height: 8vh;
   width: 100%;
   background-color:rgb(219, 228, 231);
 }
 .Dental-icon2{
-  margin-top: 5px;
-  margin-left: 50px;
+  margin-top: 0.8%;
+  margin-left: 4%;
 }
 .Dental-heading3{
   font-size: 15px;
-  margin-left: 20px;
+  margin-left: 2%;
   font-weight: bold;
 }
 
 .Dentalchart22va12 {
   background-color: white;
-  padding: 20px;
+  padding: 2%;
   border-radius: 8px;
 }
 
@@ -96,16 +97,10 @@ color: black;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 2%;
   
 }
 
-
-.search-barva12{
-  height: 29px;
-  width: 350px;
-
-}
 .search-boxva12 {
   display: flex;
   align-items: center;
@@ -147,7 +142,7 @@ color: black;
   /* background-color: #e22b3a; */
 
 .Dental-tableva12 td {
-  padding: 10px;
+  padding: 1%;
   text-align: left;
   border-bottom: 1px solid #720dc5;
   border: 1px solid #ddd
@@ -156,7 +151,7 @@ color: black;
 
 .Dental-tableva12 th {
   background-color: hsl(210, 6%, 87%);
-  height: 40px;
+  height: 3vh;
   color: rgb(7, 7, 7);
   border: 1px solid #ddd;
   text-align: left;
@@ -193,25 +188,25 @@ margin-right:5px;
 
 }
 .dropdownva12{
-  margin-left: 30px;
-  width: 10px;
-  height:24px ;
+  /* margin-left: 3%; */
+  width: 1%;
+  height:3vh ;
 } 
 
 
 .data-inputva12{
-  margin-left: -260px;
-  height: 35px;
-border-radius: 5px;
-width: 270px;
+  margin-left: -18vw;
+  height: 5vh;
+  border-radius: 5px;
+  width: 16vw;
 }
 
 .add-button40va12{
   cursor: pointer;
   background-color: #007bff;
   border: none;
-  margin-top: 10px;
-  height: 30px;
+  margin-top: 1%;
+  height: 5vh;
   margin-left: 85%;
   color: whitesmoke;
   

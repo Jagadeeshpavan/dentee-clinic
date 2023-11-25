@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
-import { AiOutlineClose } from 'react-icons/ai';
 import axios from 'axios';
+import React, { useState } from 'react';
+import './POP.css';
+import 'react-datepicker/dist/react-datepicker.css';
+import { AiOutlineClose } from 'react-icons/ai';
 
 function Viewport({ handleClose }) {
+  const [events, setEvents] = useState([]);
+  const [newEvent, setNewEvent] = useState({
+    title: '',
+    start: new Date(),
+    end: new Date(),
+  });
+
   const [patientType, setPatientType] = useState('existing');
   const [patientName, setPatientName] = useState('');
   const [date, setDate] = useState('');
@@ -21,8 +30,47 @@ function Viewport({ handleClose }) {
     setPatientType(event.target.value);
   };
 
-  const handleSave = () => {
-    console.log('Saved');
+  const handleFieldChange = (field) => (event) => {
+    switch (field) {
+      case 'selectedPatient':
+        setSelectedPatient(event.target.value);
+        break;
+      case 'selectedDoctor':
+        setSelectedDoctor(event.target.value);
+        break;
+      case 'selectedChair':
+        setSelectedChair(event.target.value);
+        break;
+      case 'selectedTreatment':
+        setSelectedTreatment(event.target.value);
+        break;
+      case 'notes':
+        setNotes(event.target.value);
+        break;
+      case 'startTime':
+        setStartTime(event.target.value);
+        break;
+      case 'endTime':
+        setEndTime(event.target.value);
+        break;
+      case 'duration':
+        setDuration(event.target.value);
+        break;
+      case 'patientName':
+        setPatientName(event.target.value);
+        break;
+      case 'mobileNumber':
+        setMobileNumber(event.target.value);
+        break;
+      case 'patientTitle':
+        setPatientTitle(event.target.value);
+        break;
+      case 'date':
+        setDate(event.target.value);
+        break;
+      default:
+        break;
+    }
   };
 
   const handleClosePopup = () => {
@@ -31,28 +79,45 @@ function Viewport({ handleClose }) {
 
   const saveAppointment = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/POP1', {
-        patientType,
-        patientName,
-        date,
-        selectedPatient,
-        selectedDoctor,
-        selectedChair,
-        selectedTreatment,
-        notes,
-        startTime,
-        endTime,
-        duration,
-        mobileNumber,
-        patientTitle,
-      });
+      let response;
+      if (patientType === 'existing') {
+        response = await axios.post('http://localhost:5001/existing', {
+          patientType,
+          patientName,
+          date,
+          selectedPatient,
+          selectedDoctor,
+          selectedChair,
+          selectedTreatment,
+          notes,
+          startTime,
+          duration,
+        });
+      } else {
+        response = await axios.post('http://localhost:5001/new', {
+          patientType,
+          patientName,
+          date,
+          mobileNumber,
+          patientTitle,
+          selectedChair,
+          selectedDoctor,
+          selectedTreatment,
+          notes,
+          startTime,
+          duration,
+        });
+      }
+
+      // Update calendar events
+      setEvents([...events, newEvent]);
+
       console.log(response.data);
     } catch (error) {
       console.error(error);
     }
   };
-
-  return (
+return (
     <>
       <div className="asdd">
         <div className="Salam-11">
@@ -290,6 +355,19 @@ function Viewport({ handleClose }) {
                   <option>Dr.Amith</option>
                 </select>
               </div>
+              <div className="Note">
+                <div className="Note-1">Notes</div>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <div className="Remarks-tnx">
+                  <input
+                    className="rectanglebox"
+                    type="text"
+                    onChange={(event) => setNotes(event.target.value)}
+                    value={notes}
+                  />
+                </div>
+              </div>
+              
 
 
 
@@ -307,4 +385,4 @@ function Viewport({ handleClose }) {
   );
 }    
 
-export default Viewport;
+export default Viewport;  

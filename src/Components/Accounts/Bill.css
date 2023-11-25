@@ -220,6 +220,7 @@
 .trbills{
   background-color: #007bff;
   color: white;
+  font-size: medium;
 }
 
 
@@ -248,4 +249,45 @@
   border: 1px solid whitesmoke; /* Add a white smoke border to table data cells */
   border-collapse: collapse;
   padding: 10px 80px;
+}
+
+.popup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: center;
+  justify-content: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: white;
+  width: 400px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.popup-label {
+  margin-bottom: 5px;
+}
+
+.popup-input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.popup-buttons button {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.popup-buttons button:hover {
+  background-color: #ddd;
 }

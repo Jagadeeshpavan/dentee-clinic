@@ -218,9 +218,8 @@ function AReport() {
 
 
     </div>
-
 <div>
-<p><span>LabNetwork</span></p>
+<h3><span>LabNetwork</span></h3>
     <div className="card737-go">
     <Link to="/LabworkReport">
       <TbReportMedical />

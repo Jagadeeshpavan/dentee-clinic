@@ -55,8 +55,6 @@ const Recyclebin = () => {
     fetchData();
   }, []);
 
-
-
   const handleDeleteSelected = async () => {
     const confirmed = window.confirm('Are you sure you want to delete the selected items?');
     if (confirmed) {
@@ -79,8 +77,6 @@ const Recyclebin = () => {
       }
     }
   };
-
-
 
   const handleEmptyRecycleBin = async () => {
     const confirmed = window.confirm('Are you sure you want to empty the recycle bin?');
@@ -135,10 +131,6 @@ const handleRestoreSelected = async () => {
   }
 };
 
-
-
-  
-
   const handleOption1Change = (e) => {
     setSelectedOption1(e.target.value);
   };
@@ -154,8 +146,6 @@ const handleRestoreSelected = async () => {
   const handleSearchTextChange = (e) => {
     setSearchText(e.target.value);
   };
-
-
 
   const handleConfirmationYes = () => {
     setShowConfirmationPopup(false);
@@ -259,9 +249,6 @@ const handleRestoreSelected = async () => {
     setCurrentPage(updatedPage);
   };
 
- 
-
-
   return (
     <>
       <Navbar />
@@ -315,9 +302,6 @@ const handleRestoreSelected = async () => {
         <button className='search-btn-777'><BiSearch/></button>
       </div>
       <div className="action-buttons-left-777">
-      {/* <button className="action-buttons-777" onClick={handleRestoreSelected}>
-        Restore
-      </button> */}
       <button className="action-buttons delete-777" onClick={handleDeleteSelected}>
         Delete
       </button>
@@ -328,7 +312,7 @@ const handleRestoreSelected = async () => {
       </div>
     </div>
         </div>
-        
+
         <table className="data-table-777">
           <thead>
             <tr>

@@ -1,4 +1,4 @@
-.dwsmaincont{
+dwsmaincont{
     margin-top: 4.5%;
     margin-left: 8.8%;
     width: 92.7%;
@@ -16,19 +16,19 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 30px;
+    margin-top: 6%;
     height: 50px;
     width: 100%;
     background-color: rgb(248, 244, 244);
     box-shadow: 0px 5px 5px rgb(205, 202, 202);
 }
 .daily-icon{
-    margin-top: 5px;
-    margin-left: 50px;
+    margin-top: 5%;
+    margin-left: 50%;
 }
 .daily-acc-1{
-    font-size: 15px;
-    margin-left: 20px;
+    font-size: 95%;
+    margin-left: 1%;
     font-weight: bold;
 }
 .daily-buttonmenu{
@@ -37,14 +37,14 @@
 
 }
 .daily-total{
-    margin: 20px;
+    margin: 2%;
     display: flex;
 }
 .daily-select{
     height: 35px;
     width: 10%;
-    margin-left: 30px;
-    padding: 4px 17px; 
+    margin-left: 1%;
+    padding: 0% 1%;
 }
 .dailydate-1{
     margin-left: 3%;
@@ -52,17 +52,17 @@
     width: 10%;
 }
 .dailydate-2{
-    padding-left: 20px;
+    padding-left: 1%;
     height: 30px;
     width: 10%;
 }
 .daily-to{
-    padding: 5px;
+    padding: 1%;
 }
 .daily-button{
-    margin-left: 40px;
-    width: 40px;
-    font-size: 18px;
+    margin-left: 4%;
+    width: 3%;
+    font-size: 79%;
     height: 34px;
 }
 .daily-table{
@@ -94,13 +94,13 @@
   
 }
 .daily-headrow .th1{
-margin: 10px 30px;
+    margin: 2% 5%;
 border: 1px solid whitesmoke; 
 
 }
 .icon-2{
     color: rgb(182, 177, 177);
-    padding-left: 15px;
+    padding-left: 15%;
 
 }
 .daily-refresh{
@@ -208,13 +208,13 @@ border: 1px solid whitesmoke;
   
   .Ram-chadara{
     color: black;
-    margin: 9px 10px;
-    font-size: 13px;
+    margin: 2% 1%;
+    font-size: 90%;
   }
   .Venky-11{
     display: flex; 
     align-items: center;
-    padding-left: 10px; 
+    padding-left: 1%; 
   }
 
 
@@ -222,13 +222,7 @@ border: 1px solid whitesmoke;
 .daily-tablebody {
     border: 1px solid whitesmoke; /* Add the white smoke border */
     border-collapse: collapse;
-    font-size: 14px;
+    font-size: 91%;
     height: 40px;
     width: 100%;
 }
-
-.th1 {
-    margin: 10px 30px;
-}
-
-/* Add other styles as needed */

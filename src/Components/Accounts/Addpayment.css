@@ -4,7 +4,6 @@
     width: 88%;
 }
 
-
 .aPay-Body{
     width: 100%;
     margin-top: 5.9%;
@@ -13,27 +12,27 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: -7px;
+    margin-top: 0%;
     height: 50px;
     width: 102%;
+    margin-left: 1%;
     background-color: rgb(209, 203, 203);
 }
 .aPay-icon{
-    margin-top: 5px;
-    margin-left: 50px;
+    margin-top: 0%;
+    margin-left: 3%;
     background-color: rgb(209, 203, 203);
     border:none;
     cursor: pointer;
     
 }
 .add-pay{
-    font-size: 15px;
-    margin-left: 10px;
+    font-size: 90%;
+    margin-left: 1%;
     font-weight: bold;
 }
 .apay-selc{
-    
-    height: 410px;
+    height: 460px;
     padding-left: 1%;
     width: 80%;
     margin-left: 10%;
@@ -42,94 +41,90 @@
     background-color: rgba(243, 243, 243, 0.904);
 }
 .apay-d-s{
-    margin-left: 30px;
-    margin-top: 15px;
+    margin-left: 8%;
+    margin-top: 1%;
     display: flex;
     flex-direction: row;
 }
 .add-p-date-1{
-    padding: 5px 20px;
+    padding: 5% 2%;
 }
 .a-line{
-    height: 1px;
-    background-color: gray;
-    margin: 10px 10px;  
+    height: 0.5%;
+    background-color: rgb(154, 150, 150);
+    margin: 3% 1%;  
 
 }
 .t-p-a{
-    margin-left: 30px;
-    font-size: 13px;
+    margin-left: -7%;
+    font-size: 90%;
 }
 .a-paynow{
     display: flex;
     flex-direction: row;
-    font-size: 13px;
-    margin-left: 30px;
-    margin-top: 20px;
+    font-size: 90%;
+    margin-left: 3%;
+    margin-top: 4%;
     align-items: center;
 }
 .a-paynow-2{
     margin-left: 100px;
 }
 .a-paynow-2-1{
-    padding: 8px;
-    width: 198px;
+    padding: 3%;
+    width: 122%;
     border-color:lightseagreen;
     border-width: 0.1px;
 }
 .a-paynow-3{
-    margin-left: 20px;
+    margin-left: 8%;
 }
 .rec-icon{
-    font-size: 30px;
+    font-size: 160%;
     color: lightseagreen;
 }
 .apay-mode{
     display: flex;
     flex-direction: row;
-    margin-left: 30px;
-    font-size: 13px;
-    margin-top: 20px;
+    margin-left: 1%;
+    margin-top: 3%;
     align-items: center;
 }
 .apay-mode-2{
-    padding: 8px;
+    padding: 3%;
     width: 217px;
-    margin-left: 68px;
-    border-color:lightseagreen;
+    margin-left: 32%;
+    border-color: lightseagreen;
     border-width: 0.1px;
 }
-/* .pay-mode-3{
-    margin-top: ;
-} */
+
 .nikh-1{
     margin-top: 50px;
 }
 .apay-f-1{
     display: flex;
     flex-direction: row;
-    margin-left: 27px;
-    font-size: 13px;
-    margin-top: 70px;
+    margin-left: 4%;
+    font-size: 98%;
+    margin-top: 8%;
     align-items: center;
 }
 .apay-f1{
     display: flex;
     flex-direction: row;
-    margin-left: 25px;
-    font-size: 13px;
-    margin-top: 10px;
+    margin-left: 4%;
+    font-size: 84%;
+    margin-top: 2%;
     flex-wrap: wrap;
 }
 .apay-f2{
-    /* color: rgb(83, 116, 179); */
     background-color: #007bff;
     cursor: pointer;
 
 }
 .apay-f3{
-    margin-left: 0px;  
-    margin-top: 1px;
+    margin-left: 0%;
+    margin-top: 0%;
 }
 .apay-ff1{
     display: flex;
@@ -140,20 +135,17 @@
 }
 .apay-save{
     padding: 10px 28px;
-    /* background-color: rgb(83, 116, 179); */
     background-color: #007bff;
     .apay-ff1 {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 2%;
 }
 
 .apay-save,
 .apay-cancel {
   padding: 5px 10px;
   color: white;
-  /* background-color: #007bff; */
   background-color: #007bff;
   border: none;
   cursor: pointer;
@@ -188,7 +180,7 @@
     border: 1px solid grey;
 }
 .a-search-1{
-    margin-left: 40px;
+    margin-left: 4%;
     background-color: white;
     border: 1px solid grey;
     border-right: transparent;
@@ -200,129 +192,28 @@
     
 }
 .a-search-1234{
-    font-size: 20px;
+    font-size: 110%;
     font-weight: bold;
 }
-.a-show{
-    border: none;
-    background-color: rgba(243, 243, 243, 0.904);
-    font-size: 13px;
-    font-family: 'Times New Roman', Times, serif;
-    color:lightseagreen;
-}
-.pay-table-nikhil-a1{
-    width: 100%;
-    float: none;
-    border: 1px solid rgb(209, 203, 203);
-    border-collapse: collapse;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-.pay-table-head-a2{
-    border: 1px solid rgb(209, 203, 203);
-    border-collapse: collapse;
-    background-color: rgb(209, 203, 203);
-    padding: 10px;
-    font-size: 14px;
-}
-.some-1-a3 td {
-    border-collapse: collapse;
-    padding: 10px 68px;
-} 
+
 th,
 td {
     align-items: center;  
-}
-.add-pay-ni{
-    height: 80px;
-    border: 2px solid grey; 
-    width: 1000px;
-    margin-top: 50px;
-    background-color: white;
-   
-}
-.add-pay-ni-1{
-    display: flex;
-    flex-direction: row;
-    
-}
-.add-pay-ni .add-che{
-    height: 40px;
-    width: 250px;
-    background-color: rgb(255, 255, 255);
-    margin-top: 17px;
-    margin-left: 40px;
-    border: 0.5px solid black;
-    border-radius: 3px;
-}
-.add-che{
-    display: flex;
-    flex-direction: row;
-}
-.add-che-1{
-    margin-left: 10px;
-    margin-top: 5px;
-    border: none;
-    width: 180px;
-    height: 30px;
-    outline-width: 0;
-}
-/* input:focus{
-    outline: none !important;
-    border:none !important;
-    box-shadow: none !important;
-} */
-.ax-2{
-    margin-left: 13px;
-    margin-top: 10px;
-    font-size: 24px;
-    color:gray;
-}
-.add-pay-d-1{
-    margin-left: 60px;
-    width: 260px;
-    height: 39px;
-    margin-top: 16px;
 }
 .add-bankn{
     display: flex;
     flex-direction: row;
 }
-.ab-2{
-    margin-left: 13px;
-    margin-top: 10px;
-    font-size: 24px;
-    color:gray;
-}
-.add-bankn-1{
-    margin-left: 10px;
-    margin-top: 5px;
-    border: none;
-    width: 180px;
-    height: 30px;
-    outline-width: 0 !important;
-}
 .add-pay-ni-2{
     display: flex;
     flex-direction: row;
 }
-.add-pay-ni-2 .add-bankn{
-    height: 40px;
-    width: 250px;
-    background-color: rgb(255, 255, 255);
-    margin-top: 17px;
-    margin-left: 60px;
-    border: 0.5px solid black;
-    border-radius: 3px;
-}
-
-
 
 .apay-ff1 {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
-    margin-top: 20px;
+    margin-top: 2%;
   }
   
   .apay-save,
@@ -340,4 +231,9 @@ td {
       color: white;
     }
   }
-  
+  .a-p{
+    display: flex; 
+    justify-content: space-between;
+    margin-left: 8%;
+    
+  }

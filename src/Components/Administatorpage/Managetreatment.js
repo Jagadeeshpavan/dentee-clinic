@@ -1,49 +1,17 @@
-import { MdOutlineModeEditOutline } from "react-icons/md";
-import { BsSearch } from "react-icons/bs";
-import { RxCross2 } from "react-icons/rx";
-import React, { useState } from 'react';
-import { AiOutlineArrowLeft,AiOutlineStepBackward,AiOutlineStepForward } from "react-icons/ai";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { MdOutlineModeEditOutline } from 'react-icons/md';
+import { RxCross2 } from 'react-icons/rx';
 import { BiSearch } from "react-icons/bi";
+import { BsSearch } from "react-icons/bs";
+import { AiOutlineArrowLeft, AiOutlineStepBackward, AiOutlineStepForward } from "react-icons/ai";
 import './Managetreatment.css';
-import { BrowserRouter as Router, Routes, Route, Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
 
-const dummyData = [
-  {
-    treatmentName: 'Treatment 1',
-    treatmentCost: '₹50',
-    favourite: true,
-  },
-  {
-    treatmentName: 'Treatment 2',
-    treatmentCost: '₹75',
-    favourite: false,
-  },
-  {
-    treatmentName: 'Treatment 3',
-    treatmentCost: '₹60',
-    favourite: true,
-  },
-  {
-    treatmentName: 'Treatment 1',
-    treatmentCost: '₹50',
-    favourite: true,
-  },
-  {
-    treatmentName: 'Treatment 2',
-    treatmentCost: '₹75',
-    favourite: false,
-  },
-  {
-    treatmentName: 'Treatment 3',
-    treatmentCost: '₹60',
-    favourite: true,
-  },
-];
-
 function Managetreatment() {
-  const [data, setData] = useState(dummyData);
+  const [data, setData] = useState([]);
   const [newMedicine, setNewMedicine] = useState({
     treatmentName: '',
     treatmentCost: '',
@@ -53,6 +21,20 @@ function Managetreatment() {
   const [isAddingNewMedicine, setIsAddingNewMedicine] = useState(false);
   const [editingIndex, setEditingIndex] = useState(-1);
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    fetchData();
+  }, [searchKeyword, currentPage]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5001/Managetreatment?search=${searchKeyword}`);
+      setData(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -72,13 +54,24 @@ function Managetreatment() {
     setEditingIndex(-1);
   };
 
-  const handleSaveNewMedicine = () => {
+  const handleSaveNewMedicine = async () => {
     if (editingIndex !== -1) {
-      const updatedData = [...data];
-      updatedData[editingIndex] = newMedicine;
-      setData(updatedData);
+      try {
+        const updatedMedicine = { ...data[editingIndex], ...newMedicine };
+        await axios.put(`http://localhost:5001/Managetreatment/${data[editingIndex]._id}`, updatedMedicine);
+        const updatedData = [...data];
+        updatedData[editingIndex] = updatedMedicine;
+        setData(updatedData);
+      } catch (error) {
+        console.error('Error updating medicine:', error);
+      }
     } else {
-      setData([...data, newMedicine]);
+      try {
+        const response = await axios.post('http://localhost:5001/Managetreatment', newMedicine);
+        setData([...data, response.data]);
+      } catch (error) {
+        console.error('Error adding medicine:', error);
+      }
     }
 
     setIsAddingNewMedicine(false);
@@ -88,6 +81,7 @@ function Managetreatment() {
       treatmentCost: '',
       favourite: false,
     });
+  
   };
 
   const handleCancelNewMedicine = () => {
@@ -101,46 +95,64 @@ function Managetreatment() {
   };
 
   const handleEdit = (index) => {
-    const medicineToEdit = data[index];
-    setNewMedicine({ ...medicineToEdit });
-    setEditingIndex(index);
+    const indexOfData = indexOfFirstItem + index; // Calculate the index of the item in the complete data array
+    setEditingIndex(indexOfData);
     setIsAddingNewMedicine(true);
+    setNewMedicine({ ...data[indexOfData] });
   };
 
-  const handleDelete = (index) => {
-    const updatedData = data.filter((_, i) => i !== index);
-    setData(updatedData);
+  const handleDelete = async (index) => {
+    try {
+      const medicineId = currentPatients[index]._id; // Get the ID of the specific row in the current page
+      await axios.delete(`http://localhost:5001/Managetreatment/${medicineId}`);
+      const updatedData = [...data];
+      updatedData.splice(indexOfFirstItem + index, 1); // Remove the item from the complete data array
+      setData(updatedData);
+    } catch (error) {
+      console.error('Error deleting medicine:', error);
+    }
   };
-
-  const handleSearch = () => {
-    const filteredData = data.filter((medicine) =>
-      Object.values(medicine).some((value) =>
-        String(value).toLowerCase().includes(searchKeyword.toLowerCase())
-      )
-    );
-    setData(filteredData);
+  
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5001/Managetreatment`);
+      const allData = response.data;
+  
+      // Filter data based on the searchKeyword
+      const filteredData = allData.filter((medicine) => {
+        const treatmentNameMatch = medicine.treatmentName.toLowerCase().includes(searchKeyword.toLowerCase());
+        const treatmentCostMatch = medicine.treatmentCost.includes(searchKeyword);
+        const favouriteMatch = searchKeyword.toLowerCase() === 'yes' && medicine.favourite
+          || searchKeyword.toLowerCase() === 'no' && !medicine.favourite
+          || searchKeyword.toLowerCase() !== 'yes' && searchKeyword.toLowerCase() !== 'no' && searchKeyword.toLowerCase() !== 'true' && searchKeyword.toLowerCase() !== 'false' && searchKeyword.toLowerCase() !== 't' && searchKeyword.toLowerCase() !== 'f' && searchKeyword.toLowerCase() !== '1' && searchKeyword.toLowerCase() !== '0';
+  
+        return treatmentNameMatch || treatmentCostMatch || favouriteMatch;
+      });
+  
+      setData(filteredData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
+  
+  
 
-  // Pagination code
   const itemsPerPage = 5;
-  const [currentPage, setCurrentPage] = useState(1);
-
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentPatients = data.slice(indexOfFirstItem, indexOfLastItem);
+  const isFirstPage = currentPage === 1;
+  const isLastPage = indexOfLastItem >= data.length;
 
   const handlePageChange = (pageNumber) => {
-    // Scroll to the top of the page
     window.scrollTo(0, 0);
     setCurrentPage(pageNumber);
   };
 
-  const isFirstPage = currentPage === 1;
-  const isLastPage = indexOfLastItem >= data.length;
-
   return (
     <>
-      <Navbar />
+     
+     <Navbar />
       <Sidebar />
       <div className="medicine-table-container-an51">
         <div className='patientdocument-head-an51'>

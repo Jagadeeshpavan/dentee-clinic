@@ -1,3 +1,4 @@
+
 import React from 'react'
 import './Cliniccollection.css'
 import { AiOutlineArrowLeft } from "react-icons/ai";
@@ -8,8 +9,28 @@ import { FaRegMoneyBillAlt}  from "react-icons/fa";
 import {Link} from "react-router-dom"
 import Navbar from '../Navbar';
 import Sidebar from '../Sidebar';
-
+import { useState, useEffect } from 'react';
 const Collection = () => {
+
+    const [collectionData, setCollectionData] = useState({
+        // totalCashCollection: 0,
+        // totalChequeCollection: 0,
+        // totalCardCollection: 0,
+        // totalCollection: 0,
+        // totalDepositedInBank: 0,
+        // patientsWithOutstandingBalance: 0,
+        // patientsWithOngoingTreatment: 0,
+        // pettyCashInHand: 0,
+      });
+    
+      useEffect(() => {
+        // Fetch clinic collection statistics data from the backend
+        fetch('http://localhost:5001/api/collectionStatistics')
+          .then((response) => response.json())
+          .then((data) => setCollectionData(data))
+          .catch((error) => console.error('Error fetching collection statistics data:', error));
+      }, []);
+    
   return (
 
     <>  
@@ -61,17 +82,41 @@ const Collection = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tc className='collection-data'>
-                        <td className='collection-one'>Total cash collection<div className='kfgh15'>0</div></td><br/>
-                        <td className='collection-two'>Total cheque collection<div className='kfgh16'>0</div></td><br/>
-                        <td className='collection-one'>Total card collection<div className='kfgh17'>0</div></td><br/>
-                        <td className='collection-two'>Total collection <div className='kfgh18'>0</div></td><br/>
-                        <td className='collection-one'>Total deposited in bank<div className='kfgh19'>0</div></td><br/>
-                        <td className='collection-two'>Patients with outstanding balance<div className='kfgh20'>0</div></td><br/>
-                        <td className='collection-one'>Patients with ongoing treatment<div className='kfgh21'>0</div></td><br/>
-                        <td className='collection-two'>Petty cash in hand<div className='kfgh22'>0</div></td><br/>
-                    </tc>
-                </tbody>
+              <tr className="collection-data">
+                <td className="collection-one">
+                  Total cash collection
+                  <div className="kfgh15">{collectionData.totalCashCollection}</div>
+                </td>
+                <td className="collection-two">
+                  Total cheque collection
+                  <div className="kfgh16">{collectionData.totalChequeCollection}</div>
+                </td>
+                <td className="collection-one">
+                  Total card collection
+                  <div className="kfgh17">{collectionData.totalCardCollection}</div>
+                </td>
+                <td className="collection-two">
+                  Total collection
+                  <div className="kfgh18">{collectionData.totalCollection}</div>
+                </td>
+                <td className="collection-one">
+                  Total deposited in bank
+                  <div className="kfgh19">{collectionData.totalDepositedInBank}</div>
+                </td>
+                <td className="collection-two">
+                  Patients with outstanding balance
+                  <div className="kfgh20">{collectionData.patientsWithOutstandingBalance}</div>
+                </td>
+                <td className="collection-one">
+                  Patients with ongoing treatment
+                  <div className="kfgh21">{collectionData.patientsWithOngoingTreatment}</div>
+                </td>
+                <td className="collection-two">
+                  Petty cash in hand
+                  <div className="kfgh22">{collectionData.pettyCashInHand}</div>
+                </td>
+              </tr>
+            </tbody>
                 </table>
                 </div>
         

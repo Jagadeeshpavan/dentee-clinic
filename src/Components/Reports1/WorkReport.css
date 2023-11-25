@@ -5,6 +5,15 @@
 }
 
 
+.th-ih1, .th-ih2, .th-ih3, .th-ih4, .th-ih5, .th-ih6 {
+    padding: 0px;
+    text-align: left;
+  }
+
+  .td-oc {
+    padding: 10px;
+    text-align: left;
+  }
 
 .workreportbody{
     margin: 0;
@@ -200,8 +209,14 @@
     /* text-align:center;
     align-items: center; */
 }
-.work-headrow .th-ih{
-    margin: 10px 30px;
+/* .th-ih6{
+    di ;
+    margin-right: 10px;
+
+} */
+
+.th-ih{
+    /* margin: 10px 30px; */
     background-color:#007bff;
     color: white;
 }

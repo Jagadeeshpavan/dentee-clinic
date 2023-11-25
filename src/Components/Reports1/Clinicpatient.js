@@ -8,10 +8,29 @@ import Sidebar from '../Sidebar';
 import {FaUserDoctor } from "react-icons/fa6";
 import { FaRegMoneyBillAlt}  from "react-icons/fa";
 import {Link} from "react-router-dom";
-
+import { useState, useEffect } from 'react';
 
 
 const Clinic = () => {
+    const [patientData, setPatientData] = useState({
+        // totalPatientsVisited: 0,
+        // patientsCheckedIn: 0,
+        // directCheckedIn: 0,
+        // newPatients: 0,
+        // referredByExisting: 0,
+        // referredByDoctor: 0,
+        // inWaitingArea: 0,
+      });
+
+      useEffect(() => {
+        // Fetch patient statistics data from the backend
+        fetch('http://localhost:5001/api/clinicStatistics')
+          .then((response) => response.json())
+          .then((data) => setPatientData(data))
+          .catch((error) => console.error('Error fetching patient statistics data:', error));
+      }, []); 
+
+
   return (
     <>  
     <Navbar/>
@@ -63,16 +82,37 @@ const Clinic = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tc className='patient-data'>
-                        <td className='patient-one'>Total Number of Patients Visited<div className='kn'>0</div></td><br/>
-                        <td className='patient-two'>No of patients checkedin<div className='ko'>0</div></td><br/>
-                        <td className='patient-one'>No of patients direct checkedin<div className='kp'>0</div></td><br/>
-                        <td className='patient-two'>No of new patients<div className='kq'>0</div></td><br/>
-                        <td className='patient-one'>Patients referred by existing patients<div className='kr'>0</div></td><br/>
-                        <td className='patient-two'>Patients referred by Doctor<div className='ks'>0</div></td><br/>
-                        <td className='patient-one'>Patients currently in waiting area<div className='kt'>0</div></td><br/>
-                    </tc>
-                </tbody>
+      <tr className='patient-data'>
+        <td className='patient-one'>
+          Total Number of Patients Visited
+          <div className='kn'>{patientData.totalPatientsVisited}</div>
+        </td>
+        <td className='patient-two'>
+          No of patients checkedin
+          <div className='ko'>{patientData.patientsCheckedIn}</div>
+        </td>
+        <td className='patient-one'>
+          No of patients direct checkedin
+          <div className='kp'>{patientData.directCheckedIn}</div>
+        </td>
+        <td className='patient-two'>
+          No of new patients
+          <div className='kq'>{patientData.newPatients}</div>
+        </td>
+        <td className='patient-one'>
+          Patients referred by existing patients
+          <div className='kr'>{patientData.referredByExisting}</div>
+        </td>
+        <td className='patient-two'>
+          Patients referred by Doctor
+          <div className='ks'>{patientData.referredByDoctor}</div>
+        </td>
+        <td className='patient-one'>
+          Patients currently in waiting area
+          <div className='kt'>{patientData.inWaitingArea}</div>
+        </td>
+      </tr>
+    </tbody>
 
                 </table>
                 </div>
