@@ -1,0 +1,101 @@
+.voucher-head{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 30px;
+    height: 50px;
+    width: 100%;
+    background-color: rgb(209, 203, 203);
+}
+.voucher-icon{
+    margin-top: 5px;
+    margin-left: 50px;
+    width: 20px;
+}
+.voucher-1{
+    font-size: 15px;
+    margin-left: 20px;
+    font-weight: bold;
+}
+.voucher-box{
+    background-color:white;
+    height: 330px;
+    width: 90%px;
+    margin: 20px;
+    border-style: ridge;
+    border-color: white;
+    box-shadow: rgba(149, 146, 146, 0.5) 0px -10px 6px -6px;
+}
+.voucher-inbox{
+    margin: 25px;
+}
+.voucher-receipt{
+    font-size: 20px;
+    color: grey;
+}
+.voucher-balance{
+    padding-top: 20px;
+    font-size: 15px;
+    color: grey;
+}
+.voucher-input{
+    display: flex;
+    padding-top: 20px;
+}
+.voucher-receipttype{
+    height: 28px;
+    width: 260px;
+}
+.voucher-amount{
+    margin-left: 30px;
+    height: 28px;
+    width: 260px;
+}
+.voucher-paidby{
+    margin-left: 30px;
+    height: 28px;
+    width: 260px;
+}
+.voucher-inputrow{
+    display: flex;
+    margin-top: 20px;
+}
+.voucher-date{
+    height: 28px;
+    width: 260px;
+}
+.voucher-paidamount{
+    height: 28px;
+    width: 540px;
+    margin-left: 32px;
+}
+.voucher-narrationrow{
+    margin-top: 20px;
+}
+.voucher-narration{
+    height: 28px;
+    width: 62.3%;
+}
+.vid-icon{
+    font-size: 30px;
+    color: rgb(47, 141, 178);
+    padding: 2px 18px;
+}
+.voucher-buttons{
+    margin-left: 70%;
+    margin-top: 20px;
+}
+.vouchersave{
+    background-color: skyblue;
+    width: 60px;
+    height: 30px;
+    border: none;
+}
+.vouchercancel{
+    margin-left: 15px;
+    background-color: skyblue;
+    width: 60px;
+    height: 30px;
+    border: none;
+
+}

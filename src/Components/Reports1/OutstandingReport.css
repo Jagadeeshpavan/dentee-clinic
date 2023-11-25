@@ -1,0 +1,136 @@
+.maincontoutstanding{
+    margin-top: 4.3%;
+    margin-left: 10%;
+    width: 89.7%;
+}
+.Outstanding-header {
+    background-color: rgb(210, 205, 205);
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* .outstanding-bckarrow {
+    font-size: 20px;
+    border: none;
+    background: none;
+    margin-top: 8px;
+} */
+
+.outsatanding-head {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.p1-in82 {
+    margin-left: 790px;
+    border: none;
+    font-size: 23px;
+    background: none;
+}
+
+.p2-hg19 {
+    display: inline-block;
+}
+
+.p3-ry47 {
+    height: 30px;
+    margin-left: 10px;
+    width: 150px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(125, 117, 117);
+}
+
+.p4-kt65 {
+    margin-left: 10px;
+    width: 150px;
+    height: 30px;
+    border: 1px solid rgb(125, 117, 117);
+    border-radius: 0px;
+}
+.p5-dc28 {
+    margin-left: 10px;
+    height: 30px;
+    width: 66px;
+    background-color: #007bff;
+    color: white;
+    border: 1px solid rgb(237, 233, 233);
+    transition: background-color 0.3s; /* Add a smooth transition effect */
+  }
+  
+  .p5-dc28:hover {
+    background-color: #3d50ae; /* Change the background color on hover */
+  }
+  
+
+.p6-jh53 {
+    margin-left: 10px;
+    height: 30px;
+    width: 40px;
+    background-color: white;
+    border: 1px solid rgb(125, 117, 117);
+}
+
+.p7-bo71 {
+    margin-left: 10px;
+}
+
+.p8-vz79 {
+    width: 100%;
+    height: auto; /* Adjusted for responsiveness */
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    box-shadow: 2px 2px 5px grey;
+    border-collapse: collapse;
+    border-spacing: none;
+    text-align: center;
+    padding: 10px; /* Added padding for better spacing */
+}
+
+.p9-nb35 {
+    background-color: white;
+    color: black;
+}
+
+.p10-ha86 {
+    margin-left: 10px; 
+}
+
+
+@media (max-width: 768px) {
+    .p2-hg19,
+    .p3-ry47,
+    .p4-kt65,
+    .p5-dc28,
+    .p6-jh53,
+    .p7-bo71,
+    .p10-ha86,
+   
+   .p1-in82{
+    margin-left: 100px;
+   }
+}
+
+
+
+
+
+.loki{
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .Ramu{
+    color: black;
+    margin: 9px 10px;
+    font-size: 13px;
+  }
+  .Prasad-3{
+    display: flex; 
+    align-items: center;
+    padding-left: 10px; 
+  }

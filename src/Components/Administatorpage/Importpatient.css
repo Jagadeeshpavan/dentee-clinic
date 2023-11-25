@@ -1,0 +1,203 @@
+.container-666{
+  margin-left: 10.1%;
+  padding-top: 4.5%;
+  width: 88.6%;
+}
+.pat-ip{
+  display: flex; 
+  align-items: center;
+  padding-left: 23px; 
+}
+.but-ip{
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.pat-bot-ip{
+  color: black;
+  margin: 9px 10px;
+  font-size: 13px;
+
+}
+.top-left-inputs-666 {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 4px;
+    margin-left: 1px;
+    padding: 8px; 
+    font-size: 16px; 
+    width: 90%;
+  }
+  
+  .date-adjustments06 {
+    width: 170px;
+    border-radius: 6px;
+    font-size: 1rem;
+    height: 30px;  
+  }
+  .input-group-666 {
+    margin-left: 10px;
+  }
+  .search-bar567 {
+    width: 100%;
+    padding: 10px;
+   
+    display: flex;
+    margin-bottom: 10px;
+  }
+  .inut789 {
+    width: 300px;
+    margin: 10px;
+    padding: 10px;
+    height: 5%;
+  
+  }
+  .data-table-666 {
+    width: 98%;
+    border-collapse: collapse;
+    margin-left: 20px;
+    color: white;
+  
+  }
+  .action-buttons-left-666 {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    margin-top: 9px;
+    margin-left: 51%;
+    background-color: #007bff;
+  }
+  .data-table-666 td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+    color: black;
+    margin-left: 10px;
+    border: 1px solid #ccc;
+  }
+
+  .data-table-666 th{
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+    color: white;
+    margin-left: 10px;
+    border: 1px solid #ccc;
+  }
+
+  
+  .data-table-666 th {
+    background-color:#007bff;
+  
+  }
+  .action-buttons-666:hover{
+    background-color: #3d50ae;
+    color: whitesmoke;
+  }
+  .action-buttons-666 {
+    color: white;
+    border: none;
+    padding: 5px 6px;
+    height: 50px;
+    text-align: center;
+    background-color: #007bff;
+    cursor: pointer;
+    margin-bottom: 5px;
+    font-size: 15px;
+  }
+  .button-666:hover{
+    background-color: #3d50ae;
+    color: whitesmoke;
+  }
+  .button-666 {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    margin-bottom: 5px;
+    justify-content: end;
+  }
+  .search-icon-65 {
+    background-color: red;
+    width: 21px;
+    height: 18px;
+    padding :10px;
+    margin-top: 10px;
+   margin-left: -10px;
+   color: white;
+   border-radius: 4%;
+  }
+  @media screen and (max-width: 768px) {
+    
+    .top-left-inputs-666 {
+      flex-direction: column;
+    }
+  
+    .date-adjustments06 {
+      width: 170px;
+      border-radius: 6px;
+      font-size: 1rem;
+      height: 30px;
+    }
+  
+    .input-group-666 {
+      margin-left: 0;
+    }
+  
+    .inut789 {
+      width: 300px;
+    margin: 10px;
+    padding: 10px;
+    height: 5%;
+    }
+  
+    .data-table-666 th,
+    .data-table-666 td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ccc;
+      margin-left: 10
+    }
+  
+    .action-buttons-left-666 {
+      display: flex;
+    flex-direction: row;
+    justify-content: end;
+    margin-top: 9px;
+    margin-left: 51%;
+    background-color: #0077bf;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    
+    .action-buttons-666 {
+      color: white;
+     
+    background-color: #0077bf;
+  
+    }
+  }
+  
+  
+  .patientdocument-head-666{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+    height: 50px;
+    width: 100%;
+    background-color:rgb(219, 228, 231);
+  }
+  .patient-icon-666{
+    margin-top: 5px;
+    margin-left: 50px;
+  }
+  .patient-heading-666{
+    font-size: 15px;
+    margin-left: 20px;
+    font-weight: bold;
+  }

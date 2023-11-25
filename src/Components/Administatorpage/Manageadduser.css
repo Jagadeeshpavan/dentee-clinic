@@ -1,0 +1,171 @@
+.add-main{
+    height: 50px;
+    width: 97%;
+    background-color: rgb(245, 244, 244);
+    border: 1px solid rgb(226, 217, 217);
+    display: flex;
+    flex-direction: row;
+}
+.manageadd{
+    margin-top: 6%;
+    margin-left: 10.3%;
+    width: 90%;
+}
+.add-text{
+    font-size: 20px;
+    font-weight: bold;
+    padding: 8px 15px;
+}
+.add-button1{
+    border: none;
+    background-color: rgb(245, 244, 244);
+    margin-left: 20px;
+    margin-top: 15px;
+}
+.add-box{
+    height: 50%;
+    width: 80%;
+    border: 1px solid  rgb(223, 218, 218);
+    margin-top: 30px;
+    margin-left:100px;
+    border-top: 5px  solid  rgb(216, 214, 214);
+}
+.add-text1{
+    color:rgb(0, 195, 255);
+    font-weight: 600;
+    margin: 30px 50px;
+    font-size: 25px;
+}
+.add-row{
+    display: flex;
+    flex-direction: row;
+}
+.add-row1{
+    display: flex;
+    flex-direction: row;
+}
+.add-box1{
+    height: 35px;
+    width: 100px;
+    background-color: rgb(240, 238, 238);
+    border-style: solid;
+    border-width: 1px;
+    border-color: skyblue;
+    margin-left: 50px;
+    border-right: none;
+}
+.add-box2{
+    height: 35px;
+    width: 135px;
+    background-color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-color: skyblue;
+    border-left: none;
+}
+.i{
+    height: 20px;
+    width: 30px;
+    margin-top: 8px;
+    margin-left: 10px;
+}
+.add-text2{
+    margin-top: 6px;
+    margin-left: 5px;
+}
+.add-icon3{
+    color: rgb(90, 88, 88);
+    padding-top: 12px;
+    font-size: 13px;
+}
+.add-input1{
+    border: none;
+    width: 120px;
+    padding-left: 5px;
+    outline-width: 0px;
+    padding-top: 3px;
+}
+.add-box3{
+    height: 35px;
+    width: 200px;
+    border: 1px solid skyblue;
+    margin-left: 30px;
+}
+.add-icon4{
+    padding-left: 10px;
+    padding-top: 10px;
+    color: rgb(75, 72, 72);
+    font-size: 18px;
+}
+.add-input2{
+    border-color: skyblue;
+    width: 200px;
+    padding-left: 5px;
+    outline-width: 0px;
+    padding-top: 3px;
+    margin-left: 30px;
+}
+.add-select{
+    width: 235px;
+    height: 40px;
+    border-color: skyblue;
+    margin-top: 30px;
+    margin-left: 50px;
+    outline-width: 0px;
+}
+.add-lastbox{
+    height: 55px;
+    width: 100%;
+    background-color: rgb(228, 228, 228);
+    margin-top: 80px;
+}
+.add-save:hover{
+    background-color: #3d50ae;
+    color: whitesmoke;
+}
+.add-save{
+    height: 30px;
+    width: 60px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 2px;
+    margin-top: 10px;
+    margin-left: 600px;
+}
+.add-cancel:hover{
+    background-color: #3d50ae;
+    color: whitesmoke;
+}
+.add-cancel{
+    height: 30px;
+    width: 60px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 2px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.add-save:hover{
+    background-color: rgb(42, 42, 235);
+}
+.add-cancel:hover{
+    background-color: rgb(42, 42, 235);
+}
+
+
+
+@media (max-width: 768px) {
+    /* Modify add-box */
+    .add-box {
+        width: 96%;
+        height: 52vh;
+        margin-left: 10px;
+    }
+
+    /* Modify add-save */
+    .add-save {
+        margin-left: 10px; /* Adjust the margin for better centering */
+    }
+}
